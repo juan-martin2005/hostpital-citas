@@ -1,6 +1,6 @@
-<footer class="py-4 mt-0 border-top" style="background-size: cover;" >
+<footer class="py-4 mt-0 border-top" style="background-size: cover;" [ngStyle]="{'background-color': obtenerTema() === '#ffffff' ? '#ffffff' : '#101d23'}">
   <div class="container-fluid m-auto" >
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-white">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
       <div class="text-center text-md-start mb-3 mb-md-0">
         <a class="me-3 text-decoration-none" href="#">Política de Privacidad</a>
         <a class="me-3 text-decoration-none" href="#">Términos de Servicio</a>
