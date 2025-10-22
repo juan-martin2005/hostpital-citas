@@ -121,12 +121,12 @@
           <input type="password" id="regConfirmPassword" class="form-control"
                  placeholder="Confirmar Contraseña"
                  formControlName="confirmPassword"
-                 [class.is-invalid]="(confirmPassword.invalid && confirmPassword.touched) || (registerForm.errors?.['mismatch'] && confirmPassword.touched)">
+                 [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched">
           <label for="regConfirmPassword">Confirmar Contraseña</label>
-          @if ((confirmPassword.invalid && confirmPassword.touched) || (registerForm.errors?.['mismatch'] && confirmPassword.touched)) {
+          @if (confirmPassword.invalid && confirmPassword.touched && !confirPassword()) {
             <div class="invalid-feedback">
-              @if (confirmPassword.errors?.['required']) { Confirmación requerida. }
-              @else if (registerForm.errors?.['mismatch']) { Las contraseñas no coinciden. }
+              @if (confirPassword()) { Las contraseñas no coinciden. }
+              @else if (confirmPassword.errors?.['required']) { Confirmación requerida. }
             </div>
           }
         </div>

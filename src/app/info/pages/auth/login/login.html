@@ -11,12 +11,12 @@
 
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="loginUsername"
-                     placeholder="Nombre de Usuario"
+                     placeholder="DNI (Paciente) Correo(Personal)"
                      formControlName="username"
                      [class.is-invalid]="username.invalid && username.touched">
-              <label for="loginUsername">Nombre de Usuario</label>
+              <label for="loginUsername">DNI (Paciente) o Correo(Personal)</label>
               @if (username.invalid && username.touched) {
-                <div class="invalid-feedback">Nombre de usuario es requerido.</div>
+                <div class="invalid-feedback">DNI o Correo es requerido.</div>
               }
             </div>
 

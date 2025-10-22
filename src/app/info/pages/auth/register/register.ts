@@ -69,31 +69,28 @@ export class RegisterComponent {
   });
 
   onSubmit(form: any) {
-    if (this.registerForm.valid) {
-      // SERVICIO
+    console.log(form);
+    // SERVICIO
+    if(!this.registerForm.invalid){
       this.service.registrar(form).subscribe({
-        next: () => {
-          Swal.fire({
-            theme: 'bootstrap-5',
-            title: "¡Registro Exitoso!",
-            text: "Serás redirigido a la página de inicio.",
-            icon: "success",
-            draggable: true,
-            confirmButtonText: "Aceptar"
-          })
-            .then((result) => {
-
-              this.registerForm.reset();
-
-              this.router.navigate(['/inicio']);
-            });
-        },
-        error: (err) => {
-
-        }
-      })
-    } else {
-      this.registerForm.markAllAsTouched();
+      next: () => {
+        Swal.fire({
+          theme: 'bootstrap-5',
+          title: "¡Registro Exitoso!",
+          text: "Serás redirigido a la página de inicio.",
+          icon: "success",
+          draggable: true,
+          confirmButtonText: "Aceptar"
+        })
+          .then((result) => {
+            this.registerForm.reset();
+          });
+      },
+    })
     }
+  }
+
+  confirPassword(){
+    return this.registerForm.get('confirmPassword')?.value  === this.registerForm.get('password')?.value ? true : false;
   }
 }
