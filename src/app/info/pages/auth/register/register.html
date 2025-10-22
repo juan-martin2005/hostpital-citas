@@ -1,0 +1,148 @@
+<section id="registerSection" class="contact section">
+  <div class="form-container">
+    <h3 class="text-center">Crea tu Cuenta</h3>
+    <p class="text-center text-muted mb-4">
+      Regístrate para disfrutar de nuestros servicios.
+    </p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)" class="php-email-form">
+      @let nombre = registerForm.controls.nombre;
+      @let apellido = registerForm.controls.apellido;
+      @let email = registerForm.controls.email;
+      @let dni = registerForm.controls.dni;
+      @let fechaNacimiento = registerForm.controls.fechaNacimiento;
+      @let telefono = registerForm.controls.telefono;
+      @let sexo = registerForm.controls.sexo;
+      @let password = registerForm.controls.password;
+      @let confirmPassword = registerForm.controls.confirmPassword;
+
+      <div class="row g-3">
+        <div class="col-md-6 form-floating">
+          <input type="text" id="regNombre" class="form-control"
+                 placeholder="Nombre"
+                 formControlName="nombre"
+                 [class.is-invalid]="nombre.invalid && nombre.touched">
+          <label for="regNombre">Nombre</label>
+          @if (nombre.invalid && nombre.touched) {
+            <div class="invalid-feedback">Nombre es requerido.</div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="text" id="regApellido" class="form-control"
+                 placeholder="Apellido"
+                 formControlName="apellido"
+                 [class.is-invalid]="apellido.invalid && apellido.touched">
+          <label for="regApellido">Apellido</label>
+          @if (apellido.invalid && apellido.touched) {
+            <div class="invalid-feedback">Apellido es requerido.</div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="email" id="regEmail" class="form-control"
+                 placeholder="Correo Electrónico"
+                 formControlName="email"
+                 [class.is-invalid]="email.invalid && email.touched">
+          <label for="regEmail">Correo Electrónico</label>
+          @if (email.invalid && email.touched) {
+            <div class="invalid-feedback">
+              @if (email.errors?.['required']) { Correo es requerido. }
+              @else if (email.errors?.['email']) { Formato inválido. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="text" id="regDni" class="form-control"
+                 placeholder="DNI"
+                 formControlName="dni"
+                 [class.is-invalid]="dni.invalid && dni.touched">
+          <label for="regDni">DNI</label>
+          @if (dni.invalid && dni.touched) {
+            <div class="invalid-feedback">
+              @if (dni.errors?.['required']) { DNI es requerido. }
+              @else if (dni.errors?.['pattern']) { DNI debe tener 8 dígitos. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="date" id="regFechaNacimiento" class="form-control"
+                 formControlName="fechaNacimiento"
+                 [class.is-invalid]="fechaNacimiento.invalid && fechaNacimiento.touched">
+          <label for="regFechaNacimiento">Fecha de Nacimiento</label>
+          @if (fechaNacimiento.invalid && fechaNacimiento.touched) {
+            <div class="invalid-feedback">Campo requerido.</div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="tel" id="regTelefono" class="form-control"
+                 placeholder="Teléfono"
+                 formControlName="telefono"
+                 [class.is-invalid]="telefono.invalid && telefono.touched">
+          <label for="regTelefono">Teléfono</label>
+          @if (telefono.invalid && telefono.touched) {
+            <div class="invalid-feedback">
+              @if (telefono.errors?.['required']) { Teléfono es requerido. }
+              @else if (telefono.errors?.['pattern']) { Ingrese un número de 9 dígitos. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-6">
+          <select id="regSexo" class="form-select"
+                  formControlName="sexo"
+                  [class.is-invalid]="sexo.invalid && sexo.touched">
+            <option value="" disabled selected>Selecciona tu Sexo</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+          @if (sexo.invalid && sexo.touched) {
+            <div class="invalid-feedback d-block">Sexo es requerido.</div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="password" id="regPassword" class="form-control"
+                 placeholder="Contraseña"
+                 formControlName="password"
+                 [class.is-invalid]="password.invalid && password.touched">
+          <label for="regPassword">Contraseña</label>
+          @if (password.invalid && password.touched) {
+            <div class="invalid-feedback">
+              @if (password.errors?.['required']) { Contraseña requerida. }
+              @else if (password.errors?.['minlength']) { Mínimo 8 caracteres. } </div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="password" id="regConfirmPassword" class="form-control"
+                 placeholder="Confirmar Contraseña"
+                 formControlName="confirmPassword"
+                 [class.is-invalid]="(confirmPassword.invalid && confirmPassword.touched) || (registerForm.errors?.['mismatch'] && confirmPassword.touched)">
+          <label for="regConfirmPassword">Confirmar Contraseña</label>
+          @if ((confirmPassword.invalid && confirmPassword.touched) || (registerForm.errors?.['mismatch'] && confirmPassword.touched)) {
+            <div class="invalid-feedback">
+              @if (confirmPassword.errors?.['required']) { Confirmación requerida. }
+              @else if (registerForm.errors?.['mismatch']) { Las contraseñas no coinciden. }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="my-3">
+        <div class="loading">Loading</div>
+        <div class="error-message"></div>
+        <div class="sent-message">Registro completado con éxito</div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn-submit">
+          Crear Cuenta <i class="bi bi-person-check-fill ms-2"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

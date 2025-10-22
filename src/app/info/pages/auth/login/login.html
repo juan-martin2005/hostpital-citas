@@ -1,0 +1,50 @@
+<section id="loginSection" class="contact section m-0">
+        <div class="form-container">
+          <h3 class="text-center">Bienvenido de nuevo</h3>
+          <p class="text-center text-muted mb-4">
+            Ingresa tus credenciales para acceder a tu cuenta.
+          </p>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="php-email-form">
+            @let username = loginForm.controls.username;
+            @let password = loginForm.controls.password;
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="loginUsername"
+                     placeholder="Nombre de Usuario"
+                     formControlName="username"
+                     [class.is-invalid]="username.invalid && username.touched">
+              <label for="loginUsername">Nombre de Usuario</label>
+              @if (username.invalid && username.touched) {
+                <div class="invalid-feedback">Nombre de usuario es requerido.</div>
+              }
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="loginPassword"
+                     placeholder="Contraseña"
+                     formControlName="password"
+                     [class.is-invalid]="password.invalid && password.touched">
+              <label for="loginPassword">Contraseña</label>
+              @if (password.invalid && password.touched) {
+                <div class="invalid-feedback">
+                  @if (password.errors?.['required']) { La contraseña es requerida. }
+                  @else if (password.errors?.['minlength']) { Mínimo 6 caracteres. }
+                </div>
+              }
+            </div>
+
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Sesión iniciada correctamente</div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn-submit">
+                Acceder <i class="bi bi-box-arrow-in-right ms-2"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+</section>

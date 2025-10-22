@@ -1,0 +1,261 @@
+<div class="page-title">
+  <div class="breadcrumbs">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/"><i class="bi bi-house"></i> Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Servicios</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="title-wrapper">
+    <h1>Nuestros Servicios</h1>
+    <p>Ofrecemos una atención médica integral, combinando tecnología de punta con la calidez de nuestros especialistas.</p>
+  </div>
+</div>
+<section id="services" class="services section">
+
+  <div class="container">
+
+    <div class="services-tabs">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="services-primary-tab" data-bs-toggle="tab" data-bs-target="#services-primary" type="button" role="tab">Atención Primaria</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="services-specialty-tab" data-bs-toggle="tab" data-bs-target="#services-specialty" type="button" role="tab">Especialidades</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="services-diagnostics-tab" data-bs-toggle="tab" data-bs-target="#services-diagnostics" type="button" role="tab">Diagnóstico</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+
+        <div class="tab-pane fade show active" id="services-primary" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-stethoscope"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Consulta Médica General</h5>
+                  <p>Evaluación inicial completa y manejo de enfermedades comunes. Su primer paso para una salud integral.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Evaluación Integral de Salud</li>
+                    <li><i class="fa fa-check-circle"></i> Planificación de Cuidados Preventivos</li>
+                    <li><i class="fa fa-check-circle"></i> Monitoreo de Condiciones Crónicas</li>
+                  </ul>
+                  <a routerLink="/services/consulta-general" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-syringe"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Servicios de Vacunación</h5>
+                  <p>Programas de inmunización para todas las edades, protegiendo a la familia contra enfermedades prevenibles.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Inmunizaciones para Adultos y Niños</li>
+                    <li><i class="fa fa-check-circle"></i> Vacunas de Viaje (Internacionales)</li>
+                    <li><i class="fa fa-check-circle"></i> Campañas de Vacunación Anual (Gripe)</li>
+                  </ul>
+                  <a routerLink="/services/vacunacion" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-baby"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Salud Materno-Infantil</h5>
+                  <p>Cuidado especializado para la madre antes, durante y después del parto, y atención pediátrica completa para el bebé.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Cuidado Prenatal y Control de Embarazo</li>
+                    <li><i class="fa fa-check-circle"></i> Soporte Integral del Parto</li>
+                    <li><i class="fa fa-check-circle"></i> Cuidados Postnatales y Pediátricos</li>
+                  </ul>
+                  <a routerLink="/services/salud-materno-infantil" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-user-md"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Medicina Familiar</h5>
+                  <p>Atención continua y personalizada para todos los miembros de la familia, desde niños hasta adultos mayores.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Atención para Todas las Edades</li>
+                    <li><i class="fa fa-check-circle"></i> Manejo de Enfermedades Crónicas</li>
+                    <li><i class="fa fa-check-circle"></i> Programas de Bienestar y Prevención</li>
+                  </ul>
+                  <a routerLink="/services/medicina-familiar" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="services-specialty" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="service-item featured">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-heartbeat"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Cardiología</h5>
+                  <p>Diagnóstico y tratamiento de enfermedades del corazón y sistema circulatorio con tecnología de última generación.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Tratamiento de Enfermedades Cardíacas</li>
+                    <li><i class="fa fa-check-circle"></i> Cirugía y Cateterismo Cardíaco</li>
+                    <li><i class="fa fa-check-circle"></i> Programas de Rehabilitación</li>
+                  </ul>
+                  <a routerLink="/services/cardiologia" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-brain"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Neurocirugía y Neurología</h5>
+                  <p>Especialistas en el manejo de trastornos neurológicos y procedimientos quirúrgicos cerebrales y de columna.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Evaluación Neurológica Completa</li>
+                    <li><i class="fa fa-check-circle"></i> Tratamiento de Ictus (ACV)</li>
+                    <li><i class="fa fa-check-circle"></i> Cirugía de Columna y Cráneo</li>
+                  </ul>
+                  <a routerLink="/services/neurologia" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-bone"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Ortopedia y Traumatología</h5>
+                  <p>Manejo de lesiones musculoesqueléticas, enfermedades óseas y cirugías de reemplazo articular.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Reemplazo Articular (Cadera, Rodilla)</li>
+                    <li><i class="fa fa-check-circle"></i> Medicina Deportiva y Rehabilitación</li>
+                    <li><i class="fa fa-check-circle"></i> Manejo del Dolor Crónico</li>
+                  </ul>
+                  <a routerLink="/services/ortopedia" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-user-nurse"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Oncología y Radioterapia</h5>
+                  <p>Atención integral del cáncer, ofreciendo tratamientos avanzados como quimioterapia y radioterapia de precisión.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Diagnóstico y Tratamiento del Cáncer</li>
+                    <li><i class="fa fa-check-circle"></i> Quimioterapia y Terapias Dirigidas</li>
+                    <li><i class="fa fa-check-circle"></i> Servicios de Soporte y Cuidados Paliativos</li>
+                  </ul>
+                  <a routerLink="/services/oncologia" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="services-diagnostics" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-vial"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Laboratorio Clínico</h5>
+                  <p>Pruebas de laboratorio rápidas y confiables para el diagnóstico oportuno de una amplia gama de condiciones.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Análisis de Sangre y Perfiles Bioquímicos</li>
+                    <li><i class="fa fa-check-circle"></i> Servicios de Patología y Biopsias</li>
+                    <li><i class="fa fa-check-circle"></i> Resultados de Alta Precisión</li>
+                  </ul>
+                  <a routerLink="/services/laboratorio" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="service-item">
+                <div class="service-icon-wrapper">
+                  <i class="fa fa-x-ray"></i>
+                </div>
+                <div class="service-details">
+                  <h5>Imágenes Diagnósticas</h5>
+                  <p>Unidad de radiología equipada para obtener imágenes detalladas que asisten en el diagnóstico médico.</p>
+                  <ul class="service-benefits">
+                    <li><i class="fa fa-check-circle"></i> Resonancia Magnética (MRI)</li>
+                    <li><i class="fa fa-check-circle"></i> Tomografía Computarizada (CT)</li>
+                    <li><i class="fa fa-check-circle"></i> Ultrasonido y Rayos X</li>
+                  </ul>
+                  <a routerLink="/services/imagenes" class="service-link">
+                    <span>Saber Más</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>

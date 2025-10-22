@@ -1,0 +1,3 @@
+.sb-sidenav-toggled #layoutSidenav_nav {
+  transform: translateX(-225px);
+}

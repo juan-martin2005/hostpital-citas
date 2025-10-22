@@ -1,0 +1,50 @@
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+    <a routerLink="/" class="logo d-flex align-items-center me-auto me-xl-0">
+      <img src="img/iconNovaSalud.svg" alt="Ícono Nova Salud" class="my-icon">
+      <h1 class="sitename">NovaSalud</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li>
+          <a routerLink="/"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            Inicio
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/about-us"
+             routerLinkActive="active">
+            Nosotros
+          </a>
+        </li>
+        <li>
+          <a routerLink="/services"
+             routerLinkActive="active">
+            Servicios
+          </a>
+        </li>
+        <li>
+          <a routerLink="/doctors"
+             routerLinkActive="active">
+            Doctores
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contact"
+             routerLinkActive="active">
+            Contacto
+          </a>
+        </li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    <a class="btn-getstarted" data-bs-toggle="modal" data-bs-target="#authModal">Ingresar</a>
+
+  </div>
+</header>

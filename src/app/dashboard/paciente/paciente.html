@@ -1,0 +1,18 @@
+<div class="sb-nav-fixed">
+  <app-navbar (sidebarToggle)="toggleSidebar()"></app-navbar>
+
+  <div id="layoutSidenav" [class.sb-sidenav-toggled]="sidebarToggled">
+    <div id="layoutSidenav_nav">
+      <app-sidebar-paciente></app-sidebar-paciente>
+    </div>
+
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="container-fluid px-4">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+
+    </div>
+  </div>
+</div>
