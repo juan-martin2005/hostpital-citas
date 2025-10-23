@@ -1,1 +1,49 @@
-<p>especialidades works!</p>
+<div class="page-title">
+  <div class="breadcrumbs">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/inicio/paciente/"><i class="bi bi-house"></i> Inicio</a></li>
+        <li class="breadcrumb-item active current" aria-current="page">Nuestras Especialidades</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="title-wrapper">
+    <h1>Especialidades de Novasalud</h1>
+    <p>Explore las áreas médicas especializadas que ofrecemos. Nuestro hospital cuenta con departamentos avanzados para brindarle el mejor cuidado en cada campo de la salud.</p>
+  </div>
+</div>
+
+<section id="especialidades" class="doctors section">
+
+  <div class="container">
+
+    <div class="row gy-4 justify-content-center">
+
+      @for (esp of especialidades; track esp.nombre) {
+
+        <div class="col-xl-4 col-lg-6 col-md-8">
+          <div class="doctor-card">
+
+            <div class="doctor-content mb-2">
+              <h4 class="doctor-name">{{ esp.nombre }}</h4>
+
+              <span class="doctor-specialty mb-0">Descricpción</span>
+
+              <div class="doctor-contact-info mt-0">
+                <p>{{ esp.descripcion }}</p>
+              </div>
+
+              <a routerLink="/inicio/paciente" class="btn-appointment">Ver Doctores</a>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="col-12">
+          <p class="text-center">Actualmente no hay especialidades registradas.</p>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

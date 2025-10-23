@@ -1,1 +1,51 @@
-<p>doctores works!</p>
+<div class="page-title">
+  <div class="breadcrumbs">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/inicio/paciente/"><i class="bi bi-house"></i> Inicio</a></li>
+        <li class="breadcrumb-item active current" aria-current="page">Nuestros Doctores</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="title-wrapper">
+    <h1>Equipo Médico de Novasalud</h1>
+    <p>Conozca a los profesionales que hacen de Novasalud un referente en atención médica. Nuestro equipo está compuesto por especialistas altamente calificados y dedicados a su bienestar y salud integral.</p>
+  </div>
+</div>
+
+
+<section id="doctors" class="doctors section">
+
+  <div class="container">
+
+    <div class="row gy-4 justify-content-center">
+
+      @for (doc of doctores; track doc.id; let i = $index) {
+
+        <div class="col-xl-4 col-lg-4 col-md-6">
+          <div class="doctor-card">
+
+            <div class="doctor-content">
+              <h4 class="doctor-name">Dr. {{ doc.nombre }} {{ doc.apellido }}</h4>
+
+              <span class="doctor-specialty">{{ doc.especialidad }}</span>
+
+              <div class="doctor-contact-info">
+                <p><strong>Email:</strong> {{ doc.email }}</p>
+                <p><strong>Teléfono:</strong> {{ doc.telefono }}</p>
+              </div>
+
+              <a href="appointment.html" class="btn-appointment">Reservar Cita</a>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="col-12">
+          <p class="text-center">No hay doctores disponibles en este momento.</p>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

@@ -29,6 +29,7 @@ import {DoctoresAdmin} from './dashboard/admin/doctores-admin/doctores-admin';
 import {EditarDoctor} from './dashboard/admin/editar-doctor/editar-doctor';
 import {EditarHorario} from './dashboard/doctor/editar-horario/editar-horario';
 import {EditarEspecialidad} from './dashboard/admin/editar-especialidad/editar-especialidad';
+import {EspecialidadesPaciente} from './dashboard/paciente/especialidades/especialidades';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: ''},
@@ -46,7 +47,7 @@ export const routes: Routes = [
       {path: 'agedar-cita', component: AgendarCita},
       {path: 'mis-citas', component: MisCitas},
       {path: 'doctores', component: Doctores},
-      {path: 'especialidades', component: Especialidades},
+      {path: 'especialidades', component: EspecialidadesPaciente},
       {path: 'perfil/paciente', component: PerfilPaciente},
     ]},
   {path: 'inicio/doctor', component: Doctor, canActivate: [doctorGuard],
