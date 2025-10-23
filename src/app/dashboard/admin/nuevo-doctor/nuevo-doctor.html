@@ -1,0 +1,156 @@
+<section id="doctorSection" class="contact section">
+  <div class="form-container">
+    <h3 class="text-center">Registrar Nuevo Doctor</h3>
+    <p class="text-center text-muted mb-4">
+      Complete el formulario para agregar un nuevo doctor al sistema.
+    </p>
+
+    <form [formGroup]="doctorForm" (ngSubmit)="onSubmit(doctorForm.value)" class="php-email-form">
+      @let nombre = doctorForm.controls.nombre;
+      @let apellido = doctorForm.controls.apellido;
+      @let email = doctorForm.controls.email;
+      @let telefono = doctorForm.controls.telefono;
+      @let sexo = doctorForm.controls.sexo;
+      @let especialidad = doctorForm.controls.especialidad;
+      @let password = doctorForm.controls.password;
+      @let confirmPassword = doctorForm.controls.confirmPassword;
+
+      <div class="row g-3">
+        <div class="col-md-6 form-floating">
+          <input type="text" id="doctorNombre" class="form-control"
+                 placeholder="Nombre"
+                 formControlName="nombre"
+                 [class.is-invalid]="nombre.invalid && nombre.touched">
+          <label for="doctorNombre">Nombre</label>
+          @if (nombre.invalid && nombre.touched) {
+            <div class="invalid-feedback">
+              @if (nombre.errors?.['required']) { Nombre es requerido. }
+              @else if (nombre.errors?.['minlength']) { Mínimo 2 caracteres. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="text" id="doctorApellido" class="form-control"
+                 placeholder="Apellido"
+                 formControlName="apellido"
+                 [class.is-invalid]="apellido.invalid && apellido.touched">
+          <label for="doctorApellido">Apellido</label>
+          @if (apellido.invalid && apellido.touched) {
+            <div class="invalid-feedback">
+              @if (apellido.errors?.['required']) { Apellido es requerido. }
+              @else if (apellido.errors?.['minlength']) { Mínimo 2 caracteres. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="email" id="doctorEmail" class="form-control"
+                 placeholder="Correo Electrónico"
+                 formControlName="email"
+                 [class.is-invalid]="email.invalid && email.touched">
+          <label for="doctorEmail">Correo Electrónico</label>
+          @if (email.invalid && email.touched) {
+            <div class="invalid-feedback">
+              @if (email.errors?.['required']) { Correo es requerido. }
+              @else if (email.errors?.['email']) { Formato inválido. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="tel" id="doctorTelefono" class="form-control"
+                 placeholder="Teléfono"
+                 formControlName="telefono"
+                 [class.is-invalid]="telefono.invalid && telefono.touched">
+          <label for="doctorTelefono">Teléfono</label>
+          @if (telefono.invalid && telefono.touched) {
+            <div class="invalid-feedback">
+              @if (telefono.errors?.['required']) { Teléfono es requerido. }
+              @else if (telefono.errors?.['pattern']) { Ingrese un número de 9 dígitos. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <select name="sexo"
+                  id="doctorSexo"
+                  class="form-select"
+                  formControlName="sexo"
+                  [class.is-invalid]="sexo.invalid && sexo.touched"
+                  required>
+            <option value="" selected disabled>Selecciona el Sexo</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+          <label for="doctorSexo">Sexo</label>
+          @if (sexo.invalid && sexo.touched) {
+            <div class="invalid-feedback d-block">Sexo es requerido.</div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <select name="especialidad"
+                  id="doctorEspecialidad"
+                  class="form-select"
+                  formControlName="especialidad"
+                  [class.is-invalid]="especialidad.invalid && especialidad.touched"
+                  required>
+            <option value="" selected disabled>Selecciona una Especialidad</option>
+            @for (esp of especialidades; track esp.id) {
+              <option [value]="esp.nombre">{{ esp.nombre }}</option>
+            }
+          </select>
+          <label for="doctorEspecialidad">Especialidad</label>
+          @if (especialidad.invalid && especialidad.touched) {
+            <div class="invalid-feedback d-block">Especialidad es requerida.</div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="password" id="doctorPassword" class="form-control"
+                 placeholder="Contraseña"
+                 formControlName="password"
+                 [class.is-invalid]="password.invalid && password.touched">
+          <label for="doctorPassword">Contraseña</label>
+          @if (password.invalid && password.touched) {
+            <div class="invalid-feedback">
+              @if (password.errors?.['required']) { Contraseña requerida. }
+              @else if (password.errors?.['minlength']) { Mínimo 8 caracteres. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="password" id="doctorConfirmPassword" class="form-control"
+                 placeholder="Confirmar Contraseña"
+                 formControlName="confirmPassword"
+                 [class.is-invalid]="(confirmPassword.invalid && confirmPassword.touched) || (confirmPassword.touched && !confirmarPassword())">
+          <label for="doctorConfirmPassword">Confirmar Contraseña</label>
+          @if (confirmPassword.touched) {
+            <div class="invalid-feedback">
+              @if (!confirmarPassword()) { Las contraseñas no coinciden. }
+              @else if (confirmPassword.errors?.['required']) { Confirmación requerida. }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="my-3">
+        @if (isLoading) {
+          <div class="loading">Registrando doctor...</div>
+        }
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn-submit" [disabled]="isLoading">
+          @if (isLoading) {
+            <span>Registrando...</span>
+          } @else {
+            <span>Registrar Doctor <i class="bi bi-person-plus-fill ms-2"></i></span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

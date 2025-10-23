@@ -54,7 +54,7 @@ export class RegisterComponent {
       nonNullable: true,
       validators: [Validators.required, Validators.pattern('^[0-9]{9}$')] // Ejemplo: 9 dígitos
     }),
-    sexo: new FormControl(null, {
+    sexo: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required]
     }),
@@ -69,10 +69,22 @@ export class RegisterComponent {
   });
 
   onSubmit(form: any) {
-    console.log(form);
-    // SERVICIO
-    if(!this.registerForm.invalid){
-      this.service.registrar(form).subscribe({
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    if (!this.confirmarPassword()) {
+      Swal.fire({
+        title: 'Error de Validación',
+        text: 'Las contraseñas no coinciden. Por favor, revísalas.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
+
+    this.service.registrar(form).subscribe({
       next: () => {
         Swal.fire({
           theme: 'bootstrap-5',
@@ -82,15 +94,25 @@ export class RegisterComponent {
           draggable: true,
           confirmButtonText: "Aceptar"
         })
-          .then((result) => {
+          .then(() => {
             this.registerForm.reset();
           });
       },
-    })
-    }
+      error: (err) => {
+        console.error('Error al registrar paciente:', err);
+        const errorMessage = err.error?.message || 'Ocurrió un error inesperado durante el registro.';
+        Swal.fire({
+          title: 'Error en el Registro',
+          text: errorMessage,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
   }
 
-  confirPassword(){
-    return this.registerForm.get('confirmPassword')?.value  === this.registerForm.get('password')?.value ? true : false;
-  }
+  confirmarPassword():boolean {
+    const password = this.registerForm.get('password')?.value;
+    const confirmPassword = this.registerForm.get('confirmPassword')?.value;
+    return password === confirmPassword;  }
 }

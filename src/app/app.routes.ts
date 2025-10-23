@@ -12,8 +12,20 @@ import {AboutUs} from './info/pages/about-us/about-us';
 import {Services} from './info/pages/services/services';
 import {Doctors} from './info/pages/doctors/doctors';
 import {Contact} from './info/pages/contact/contact';
-
-
+import {InicioAdmin} from './dashboard/admin/inicio-admin/inicio-admin';
+import {AgendarCita} from './dashboard/paciente/agendar-cita/agendar-cita';
+import {MisCitas} from './dashboard/paciente/mis-citas/mis-citas';
+import {Doctores} from './dashboard/paciente/doctores/doctores';
+import {Especialidades} from './dashboard/paciente/especialidades/especialidades';
+import {InicioDoctor} from './dashboard/doctor/inicio-doctor/inicio-doctor';
+import {Horarios} from './dashboard/doctor/horarios/horarios';
+import {NuevoHorario} from './dashboard/doctor/nuevo-horario/nuevo-horario';
+import {Citas} from './dashboard/doctor/citas/citas';
+import {PerfilPaciente} from './dashboard/paciente/perfil-paciente/perfil-paciente';
+import {PerfilDoctor} from './dashboard/doctor/perfil-doctor/perfil-doctor';
+import {NuevaEspecialidad} from './dashboard/admin/nueva-especialidad/nueva-especialidad';
+import {NuevoDoctor} from './dashboard/admin/nuevo-doctor/nuevo-doctor';
+import {DoctoresAdmin} from './dashboard/admin/doctores-admin/doctores-admin';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: ''},
@@ -25,12 +37,32 @@ export const routes: Routes = [
       {path: 'doctors', component: Doctors},
       {path: 'contact', component: Contact},
     ]},
-  {path: 'inicio', component: Paciente, canActivate: [pacienteGuard],
+  {path: 'inicio/paciente', component: Paciente, canActivate: [pacienteGuard],
     children: [
       {path: '', component: InicioPaciente},
+      {path: 'agedar-cita', component: AgendarCita},
+      {path: 'mis-citas', component: MisCitas},
+      {path: 'doctores', component: Doctores},
+      {path: 'especialidades', component: Especialidades},
+      {path: 'perfil/paciente', component: PerfilPaciente},
     ]},
-  {path: 'inicio', component: Doctor, canActivate: [doctorGuard]},
-  {path: 'inicio', component: Admin, canActivate: [adminGuard]},
+  {path: 'inicio/doctor', component: Doctor, canActivate: [doctorGuard],
+    children: [
+      {path: '', component: InicioDoctor},
+      {path: 'horarios', component: Horarios},
+      {path: 'nuevo-horario', component: NuevoHorario},
+      {path: 'citas', component: Citas},
+      {path: 'perfil/doctor', component: PerfilDoctor},
+
+    ]},
+  {path: 'inicio/admin', component: Admin, canActivate: [adminGuard],
+    children: [
+      {path: '', component: InicioAdmin},
+      {path: 'especialidades', component: Especialidades},
+      {path: 'nueva-especialidad', component: NuevaEspecialidad},
+      {path: 'doctores', component: DoctoresAdmin},
+      {path: 'registrar-doctor', component: NuevoDoctor},
+    ]},
 
 
   {path: '**', redirectTo: ''},

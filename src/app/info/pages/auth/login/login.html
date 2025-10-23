@@ -29,7 +29,7 @@
               @if (password.invalid && password.touched) {
                 <div class="invalid-feedback">
                   @if (password.errors?.['required']) { La contraseña es requerida. }
-                  @else if (password.errors?.['minlength']) { Mínimo 6 caracteres. }
+                  @else if (password.errors?.['minlength']) { Mínimo 8 caracteres. }
                 </div>
               }
             </div>

@@ -44,7 +44,12 @@
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
 
-    <a class="btn-getstarted" data-bs-toggle="modal" data-bs-target="#authModal">Ingresar</a>
+    <a class="btn-getstarted"
+       data-bs-toggle="modal"
+       data-bs-target="#authModal"
+       (click)="onIngresarClick($event)">
+      Ingresar
+    </a>
 
   </div>
 </header>

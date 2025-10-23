@@ -52,7 +52,15 @@ export class Login {
           }).then((result) => {
             this.closeModal();
 
-            this.router.navigate(['/inicio']);
+            if (this.service.isAdminAuthenticate()) {
+              this.router.navigate(['/inicio/admin']);
+            } else if (this.service.isDoctorAuthenticate()) {
+              this.router.navigate(['/inicio/doctor']);
+            } else if (this.service.isPacienteAuthenticate()) {
+              this.router.navigate(['/inicio/paciente']);
+            } else {
+              this.router.navigate(['/']);
+            }
           });
         },
         error: (err) => {

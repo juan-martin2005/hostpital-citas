@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable, tap} from 'rxjs';
 
-
 interface LoginEnity {
   username: string;
   password: string;
@@ -55,6 +54,37 @@ export class LoginService {
     }
     const paylod = JSON.parse(atob(token.split('.')[1]));
     return Date.now() < paylod.exp * 1000;
+  }
+
+  getInfoToken(): any {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return {
+      id: payload.id || payload.sub,
+      username: payload.username || payload.sub,
+      nombre: payload.nombre,
+      apellido: payload.apellido,
+      email: payload.email,
+      rol: payload.role[0].authority
+    };
+  }
+
+  getUser(): string {
+    const userInfo = this.getInfoToken();
+    const rol = this.geRol();
+
+    if (userInfo?.nombre && userInfo?.apellido) {
+      return `${userInfo.apellido}, ${userInfo.nombre}`;
+    }
+
+    if (rol === 'ROLE_ADMIN') {
+      return 'Administrador';
+    }
+
+    return userInfo?.username || 'Usuario';
   }
 
   isPacienteAuthenticate(): boolean{

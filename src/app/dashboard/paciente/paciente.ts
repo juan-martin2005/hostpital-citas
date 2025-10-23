@@ -31,7 +31,7 @@ export class Paciente implements OnInit {
   }
 
   ngOnDestroy() {
-    // Limpiar clase al destruir componente
     document.body.classList.remove('sb-sidenav-toggled');
   }
+
 }

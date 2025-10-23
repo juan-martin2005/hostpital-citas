@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoginService } from '../../core/services/auth/login/login';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -27,7 +27,8 @@ export class Navbar {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si"
+      confirmButtonText: "Si",
+      cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({

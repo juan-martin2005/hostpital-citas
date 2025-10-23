@@ -91,14 +91,18 @@
           }
         </div>
 
-        <div class="col-md-6">
-          <select id="regSexo" class="form-select"
+        <div class="col-md-6 form-floating">
+          <select name="sexo"
+                  id="regSexo"
+                  class="form-select"
                   formControlName="sexo"
-                  [class.is-invalid]="sexo.invalid && sexo.touched">
-            <option value="" disabled selected>Selecciona tu Sexo</option>
+                  [class.is-invalid]="sexo.invalid && sexo.touched"
+                  required>
+            <option value="" selected disabled>Selecciona tu Sexo</option>
             <option value="M">Masculino</option>
             <option value="F">Femenino</option>
           </select>
+          <label for="regSexo">Sexo</label>
           @if (sexo.invalid && sexo.touched) {
             <div class="invalid-feedback d-block">Sexo es requerido.</div>
           }
@@ -121,11 +125,11 @@
           <input type="password" id="regConfirmPassword" class="form-control"
                  placeholder="Confirmar Contraseña"
                  formControlName="confirmPassword"
-                 [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched">
+                 [class.is-invalid]="(confirmPassword.invalid && confirmPassword.touched) || (confirmPassword.touched && !confirmarPassword())">
           <label for="regConfirmPassword">Confirmar Contraseña</label>
-          @if (confirmPassword.invalid && confirmPassword.touched && !confirPassword()) {
+          @if (confirmPassword.touched) {
             <div class="invalid-feedback">
-              @if (confirPassword()) { Las contraseñas no coinciden. }
+              @if (!confirmarPassword()) { Las contraseñas no coinciden. }
               @else if (confirmPassword.errors?.['required']) { Confirmación requerida. }
             </div>
           }
