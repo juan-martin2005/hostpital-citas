@@ -33,12 +33,24 @@ interface EspecialidadEntity {
 export class NuevoDoctor implements OnInit {
   especialidades: EspecialidadEntity[] = [];
   isLoading = false;
-
+  seePassword = false
+  seeConfirmPassword = false
   constructor(
     private doctorService: DoctorService,
     private especialidadService: EspecialidadService,
     private router: Router
   ) {}
+
+  togglePasswordVisibility(): void {
+    let password = document.getElementById('doctorPassword') as HTMLInputElement
+    this.seePassword = !this.seePassword;
+    password.type = this.seePassword ? 'text' : 'password';
+  }
+  toggleConfirmPasswordVisibility(): void {
+    let password = document.getElementById('doctorConfirmPassword') as HTMLInputElement
+    this.seeConfirmPassword = !this.seeConfirmPassword;
+    password.type = this.seeConfirmPassword ? 'text' : 'password';
+  }
 
   ngOnInit(): void {
     this.cargarEspecialidades();

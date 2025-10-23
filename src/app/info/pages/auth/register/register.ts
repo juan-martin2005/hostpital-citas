@@ -73,17 +73,6 @@ export class RegisterComponent {
       this.registerForm.markAllAsTouched();
       return;
     }
-
-    if (!this.confirmarPassword()) {
-      Swal.fire({
-        title: 'Error de Validación',
-        text: 'Las contraseñas no coinciden. Por favor, revísalas.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-      return;
-    }
-
     this.service.registrar(form).subscribe({
       next: () => {
         Swal.fire({
