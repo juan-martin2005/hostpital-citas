@@ -47,15 +47,19 @@ export class NuevoDoctor implements OnInit {
   doctorForm = new FormGroup<DoctorFormControls>({
     nombre: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2)]
+      validators: [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]
     }),
     apellido: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2)]
+      validators: [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]
     }),
     email: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email]
+      validators: [
+        Validators.required,
+        Validators.email,
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@hospital\\.com$')
+      ]
     }),
     telefono: new FormControl('', {
       nonNullable: true,
@@ -86,9 +90,10 @@ export class NuevoDoctor implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar especialidades:', err);
+        const errorMessage = err.error?.message || 'No se pudieron cargar las especialidades';
         Swal.fire({
           title: 'Error',
-          text: 'No se pudieron cargar las especialidades',
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });
@@ -101,6 +106,7 @@ export class NuevoDoctor implements OnInit {
       this.doctorForm.markAllAsTouched();
       return;
     }
+
     if (!this.confirmarPassword()) {
       Swal.fire({
         title: 'Error',
@@ -138,9 +144,12 @@ export class NuevoDoctor implements OnInit {
       error: (err) => {
         this.isLoading = false;
         console.error('Error al registrar doctor:', err);
+
+        const errorMessage = err.error?.message || 'No se pudo registrar el doctor';
+
         Swal.fire({
           title: 'Error',
-          text: err.error?.message || 'No se pudo registrar el doctor',
+          text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });

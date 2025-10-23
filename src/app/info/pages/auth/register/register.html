@@ -24,7 +24,10 @@
                  [class.is-invalid]="nombre.invalid && nombre.touched">
           <label for="regNombre">Nombre</label>
           @if (nombre.invalid && nombre.touched) {
-            <div class="invalid-feedback">Nombre es requerido.</div>
+            <div class="invalid-feedback">
+              @if (nombre.errors?.['required']) { Nombre es requerido. }
+              @else if (nombre.errors?.['pattern']) { El nombre no puede contener números o símbolos. }
+            </div>
           }
         </div>
 
@@ -35,7 +38,10 @@
                  [class.is-invalid]="apellido.invalid && apellido.touched">
           <label for="regApellido">Apellido</label>
           @if (apellido.invalid && apellido.touched) {
-            <div class="invalid-feedback">Apellido es requerido.</div>
+            <div class="invalid-feedback">
+              @if (apellido.errors?.['required']) { Apellido es requerido. }
+              @else if (apellido.errors?.['pattern']) { El apellido no puede contener números o símbolos. }
+            </div>
           }
         </div>
 
@@ -48,7 +54,7 @@
           @if (email.invalid && email.touched) {
             <div class="invalid-feedback">
               @if (email.errors?.['required']) { Correo es requerido. }
-              @else if (email.errors?.['email']) { Formato inválido. }
+              @else if (email.errors?.['email']) { El formato del correo es inválido (ej. xyz@email.com). }
             </div>
           }
         </div>
@@ -62,7 +68,7 @@
           @if (dni.invalid && dni.touched) {
             <div class="invalid-feedback">
               @if (dni.errors?.['required']) { DNI es requerido. }
-              @else if (dni.errors?.['pattern']) { DNI debe tener 8 dígitos. }
+              @else if (dni.errors?.['pattern']) { El DNI debe contener exactamente 8 dígitos numéricos. }
             </div>
           }
         </div>
@@ -73,7 +79,11 @@
                  [class.is-invalid]="fechaNacimiento.invalid && fechaNacimiento.touched">
           <label for="regFechaNacimiento">Fecha de Nacimiento</label>
           @if (fechaNacimiento.invalid && fechaNacimiento.touched) {
-            <div class="invalid-feedback">Campo requerido.</div>
+            <div class="invalid-feedback">
+              @if (fechaNacimiento.errors?.['required']) { Fecha de nacimiento es requerida. }
+              @else if (fechaNacimiento.errors?.['fechaFutura']) { La fecha no puede ser futura. }
+              @else if (fechaNacimiento.errors?.['edadMinima']) { Debes ser mayor de 18 años. }
+            </div>
           }
         </div>
 
@@ -86,7 +96,7 @@
           @if (telefono.invalid && telefono.touched) {
             <div class="invalid-feedback">
               @if (telefono.errors?.['required']) { Teléfono es requerido. }
-              @else if (telefono.errors?.['pattern']) { Ingrese un número de 9 dígitos. }
+              @else if (telefono.errors?.['pattern']) { El teléfono debe contener exactamente 9 dígitos numéricos. }
             </div>
           }
         </div>
@@ -116,8 +126,9 @@
           <label for="regPassword">Contraseña</label>
           @if (password.invalid && password.touched) {
             <div class="invalid-feedback">
-              @if (password.errors?.['required']) { Contraseña requerida. }
-              @else if (password.errors?.['minlength']) { Mínimo 8 caracteres. } </div>
+              @if (password.errors?.['required']) { Contraseña es requerida. }
+              @else if (password.errors?.['minlength']) { La contraseña debe tener mínimo 8 caracteres. }
+            </div>
           }
         </div>
 
@@ -129,8 +140,8 @@
           <label for="regConfirmPassword">Confirmar Contraseña</label>
           @if (confirmPassword.touched) {
             <div class="invalid-feedback">
-              @if (!confirmarPassword()) { Las contraseñas no coinciden. }
-              @else if (confirmPassword.errors?.['required']) { Confirmación requerida. }
+              @if (confirmPassword.errors?.['required']) { Confirmación de contraseña es requerida. }
+              @else if (!confirmarPassword()) { Las contraseñas no coinciden. }
             </div>
           }
         </div>

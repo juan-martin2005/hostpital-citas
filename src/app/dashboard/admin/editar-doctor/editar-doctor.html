@@ -1,0 +1,65 @@
+<section id="doctorSection" class="contact section">
+  <div class="form-container">
+    <h3 class="text-center">Cambiar Contraseña del Doctor</h3>
+    <p class="text-center text-muted mb-4">
+      Ingrese la nueva contraseña para el doctor.
+    </p>
+
+    <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" class="php-email-form">
+      @let password = passwordForm.controls.password;
+      @let confirmPassword = passwordForm.controls.confirmPassword;
+
+      <div class="row g-3">
+        <div class="col-md-12 form-floating">
+          <input type="password" id="doctorPassword" class="form-control"
+                 placeholder="Nueva Contraseña"
+                 formControlName="password"
+                 [class.is-invalid]="password.invalid && password.touched">
+          <label for="doctorPassword">Nueva Contraseña</label>
+          @if (password.invalid && password.touched) {
+            <div class="invalid-feedback">
+              @if (password.errors?.['required']) { La contraseña es requerida. }
+              @else if (password.errors?.['minlength']) { Mínimo 8 caracteres. }
+              @else if (password.errors?.['pattern']) { Debe incluir mayúsculas, minúsculas y números. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <input type="password" id="doctorConfirmPassword" class="form-control"
+                 placeholder="Confirmar Contraseña"
+                 formControlName="confirmPassword"
+                 [class.is-invalid]="(confirmPassword.invalid || passwordForm.errors?.['mismatch']) && confirmPassword.touched">
+          <label for="doctorConfirmPassword">Confirmar Contraseña</label>
+          @if (confirmPassword.invalid && confirmPassword.touched) {
+            <div class="invalid-feedback">
+              @if (confirmPassword.errors?.['required']) { Confirmar contraseña es requerido. }
+            </div>
+          }
+          @if (passwordForm.errors?.['mismatch'] && confirmPassword.touched) {
+            <div class="invalid-feedback d-block">Las contraseñas no coinciden.</div>
+          }
+        </div>
+      </div>
+
+      <div class="my-3">
+        @if (isLoading) {
+          <div class="loading">Guardando cambios...</div>
+        }
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary me-md-2" (click)="cancelar()" [disabled]="isLoading">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isLoading || passwordForm.invalid">
+          @if (isLoading) {
+            <span>Actualizando...</span>
+          } @else {
+            <span>Guardar Contraseña <i class="bi bi-save ms-2"></i></span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

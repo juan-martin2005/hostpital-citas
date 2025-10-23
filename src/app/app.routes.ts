@@ -26,6 +26,7 @@ import {PerfilDoctor} from './dashboard/doctor/perfil-doctor/perfil-doctor';
 import {NuevaEspecialidad} from './dashboard/admin/nueva-especialidad/nueva-especialidad';
 import {NuevoDoctor} from './dashboard/admin/nuevo-doctor/nuevo-doctor';
 import {DoctoresAdmin} from './dashboard/admin/doctores-admin/doctores-admin';
+import {EditarDoctor} from './dashboard/admin/editar-doctor/editar-doctor';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: ''},
@@ -62,6 +63,7 @@ export const routes: Routes = [
       {path: 'nueva-especialidad', component: NuevaEspecialidad},
       {path: 'doctores', component: DoctoresAdmin},
       {path: 'registrar-doctor', component: NuevoDoctor},
+      {path: 'editar-doctor/:id', component: EditarDoctor},
     ]},
 
 

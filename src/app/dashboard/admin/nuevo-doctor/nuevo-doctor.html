@@ -25,7 +25,7 @@
           @if (nombre.invalid && nombre.touched) {
             <div class="invalid-feedback">
               @if (nombre.errors?.['required']) { Nombre es requerido. }
-              @else if (nombre.errors?.['minlength']) { Mínimo 2 caracteres. }
+              @else if (nombre.errors?.['pattern']) { El nombre no puede contener números o símbolos. }
             </div>
           }
         </div>
@@ -39,7 +39,7 @@
           @if (apellido.invalid && apellido.touched) {
             <div class="invalid-feedback">
               @if (apellido.errors?.['required']) { Apellido es requerido. }
-              @else if (apellido.errors?.['minlength']) { Mínimo 2 caracteres. }
+              @else if (apellido.errors?.['pattern']) { El apellido no puede contener números o símbolos. }
             </div>
           }
         </div>
@@ -53,7 +53,7 @@
           @if (email.invalid && email.touched) {
             <div class="invalid-feedback">
               @if (email.errors?.['required']) { Correo es requerido. }
-              @else if (email.errors?.['email']) { Formato inválido. }
+              @else if (email.errors?.['email'] || email.errors?.['pattern']) { El correo debe tener el formato xyz@hospital.com }
             </div>
           }
         </div>
@@ -67,7 +67,7 @@
           @if (telefono.invalid && telefono.touched) {
             <div class="invalid-feedback">
               @if (telefono.errors?.['required']) { Teléfono es requerido. }
-              @else if (telefono.errors?.['pattern']) { Ingrese un número de 9 dígitos. }
+              @else if (telefono.errors?.['pattern']) { El teléfono debe contener exactamente 9 dígitos numéricos. }
             </div>
           }
         </div>
@@ -115,8 +115,8 @@
           <label for="doctorPassword">Contraseña</label>
           @if (password.invalid && password.touched) {
             <div class="invalid-feedback">
-              @if (password.errors?.['required']) { Contraseña requerida. }
-              @else if (password.errors?.['minlength']) { Mínimo 8 caracteres. }
+              @if (password.errors?.['required']) { Contraseña es requerida. }
+              @else if (password.errors?.['minlength']) { La contraseña debe tener mínimo 8 caracteres. }
             </div>
           }
         </div>
@@ -129,8 +129,8 @@
           <label for="doctorConfirmPassword">Confirmar Contraseña</label>
           @if (confirmPassword.touched) {
             <div class="invalid-feedback">
-              @if (!confirmarPassword()) { Las contraseñas no coinciden. }
-              @else if (confirmPassword.errors?.['required']) { Confirmación requerida. }
+              @if (confirmPassword.errors?.['required']) { Confirmación de contraseña es requerida. }
+              @else if (!confirmarPassword()) { Las contraseñas no coinciden. }
             </div>
           }
         </div>

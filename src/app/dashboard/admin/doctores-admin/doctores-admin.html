@@ -1,0 +1,91 @@
+<section id="doctoresSection" class="section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bolder text-dark">
+      Lista de Doctores
+    </h2>
+
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover table-borderless align-middle mb-0">
+            <thead class="bg-primary text-white text-uppercase sticky-top">
+            <tr>
+              <th scope="col" class="py-3 text-center">ID</th>
+              <th scope="col" class="py-3">Nombre</th>
+              <th scope="col" class="py-3">Apellido</th>
+              <th scope="col" class="py-3 d-none d-lg-table-cell">Email</th>
+              <th scope="col" class="py-3 d-none d-md-table-cell">Teléfono</th>
+              <th scope="col" class="py-3 d-none d-sm-table-cell text-center">Sexo</th>
+              <th scope="col" class="py-3 text-center">Especialidad</th>
+              <th scope="col" class="py-3 text-center">Estado</th>
+              <th scope="col" class="py-3 text-center">Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @if (isLoading) {
+                <tr>
+                  <td colspan="9" class="text-center py-5 text-muted">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                  </td>
+                </tr>
+              } @else if (doctores.length === 0) {
+                <tr>
+                  <td colspan="9" class="text-center py-5 text-muted fst-italic">
+                    <i class="bi bi-info-circle me-2"></i> No hay doctores registrados
+                  </td>
+                </tr>
+              } @else {
+                @for (doctor of doctores; track doctor.id) {
+                  <tr class="text-center">
+                    <td class="fw-bold text-primary">{{ doctor.id }}</td>
+                    <td class="text-start">{{ doctor.nombre }}</td>
+                    <td class="text-start">{{ doctor.apellido }}</td>
+                    <td class="text-muted text-start d-none d-lg-table-cell">{{ doctor.email }}</td>
+                    <td class="text-muted d-none d-md-table-cell">{{ doctor.telefono }}</td>
+                    <td class="d-none d-sm-table-cell">
+                      @if (doctor.sexo === 'M') {
+                        Masculino
+                      } @else {
+                        Femenino
+                      }
+                    </td>
+                    <td>{{ doctor.especialidad }}</td>
+                    <td>
+                      @if (doctor.estado === 'ACTIVO') {
+                        <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2 fw-semibold">Activo</span>
+                      } @else if (doctor.estado === 'INACTIVO') {
+                        <span class="badge rounded-pill bg-danger-subtle text-danger px-3 py-2 fw-semibold">Inactivo</span>
+                      } @else {
+                        <span class="badge rounded-pill bg-warning-subtle text-warning px-3 py-2 fw-semibold">Desconocido</span>
+                      }
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-center flex-nowrap">
+                        <button class="btn btn-sm btn-outline-primary me-2 shadow-sm" (click)="editarDoctor(doctor.id)" title="Editar doctor">
+                          <i class="bi bi-lock"></i>
+                          <span class="d-none d-sm-inline-block ms-1">Editar</span>
+                        </button>
+
+                        <button
+                          class="btn btn-sm btn-outline-danger shadow-sm"
+                          (click)="eliminarDoctor(doctor.id)"
+                          title="Eliminar doctor"
+                        >
+                          <i class="bi bi-x-circle"></i>
+                          <span class="d-none d-sm-inline-block ms-1">Estado</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

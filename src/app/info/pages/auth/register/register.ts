@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {Router} from '@angular/router';
 import {RegisterService} from '../../../../core/services/auth/register/register';
@@ -32,11 +32,11 @@ export class RegisterComponent {
   registerForm = new FormGroup<RegisterFormControls>({
     nombre: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]
     }),
     apellido: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]
     }),
     email: new FormControl('', {
       nonNullable: true,
@@ -48,11 +48,11 @@ export class RegisterComponent {
     }),
     fechaNacimiento: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required]
+      validators: [Validators.required, this.validarEdadMinima(18)]
     }),
     telefono: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.pattern('^[0-9]{9}$')] // Ejemplo: 9 dígitos
+      validators: [Validators.required, Validators.pattern('^[0-9]{9}$')]
     }),
     sexo: new FormControl('', {
       nonNullable: true,
@@ -68,6 +68,34 @@ export class RegisterComponent {
     }),
   });
 
+  validarEdadMinima(edadMinima: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+
+      const fechaNacimiento = new Date(control.value);
+      const hoy = new Date();
+
+      if (fechaNacimiento > hoy) {
+        return { fechaFutura: true };
+      }
+
+      let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+
+      if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+        edad--;
+      }
+
+      if (edad < edadMinima) {
+        return { edadMinima: true };
+      }
+
+      return null;
+    };
+  }
+
   onSubmit(form: any) {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -76,8 +104,8 @@ export class RegisterComponent {
 
     if (!this.confirmarPassword()) {
       Swal.fire({
-        title: 'Error de Validación',
-        text: 'Las contraseñas no coinciden. Por favor, revísalas.',
+        title: 'Error',
+        text: 'Las contraseñas no coinciden.',
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
@@ -87,22 +115,21 @@ export class RegisterComponent {
     this.service.registrar(form).subscribe({
       next: () => {
         Swal.fire({
-          theme: 'bootstrap-5',
-          title: "¡Registro Exitoso!",
-          text: "Serás redirigido a la página de inicio.",
-          icon: "success",
-          draggable: true,
-          confirmButtonText: "Aceptar"
-        })
-          .then(() => {
-            this.registerForm.reset();
-          });
+          title: '¡Registro Exitoso!',
+          text: 'Tu cuenta ha sido creada correctamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }).then(() => {
+          this.registerForm.reset();
+        });
       },
       error: (err) => {
         console.error('Error al registrar paciente:', err);
+
         const errorMessage = err.error?.message || 'Ocurrió un error inesperado durante el registro.';
+
         Swal.fire({
-          title: 'Error en el Registro',
+          title: 'Error',
           text: errorMessage,
           icon: 'error',
           confirmButtonText: 'Aceptar'
@@ -114,5 +141,6 @@ export class RegisterComponent {
   confirmarPassword():boolean {
     const password = this.registerForm.get('password')?.value;
     const confirmPassword = this.registerForm.get('confirmPassword')?.value;
-    return password === confirmPassword;  }
+    return password === confirmPassword;
+  }
 }
