@@ -1,0 +1,59 @@
+<section id="especialidadEditSection" class="contact section">
+  <div class="form-container">
+    <h3 class="text-center">Editar Especialidad</h3>
+    <p class="text-center text-muted mb-4">
+      Actualice los detalles de la especialidad seleccionada.
+    </p>
+
+    <form [formGroup]="especialidadForm" (ngSubmit)="onSubmit()" class="php-email-form">
+      @let nombre = especialidadForm.controls.nombre;
+      @let descripcion = especialidadForm.controls.descripcion;
+
+      <div class="row g-3">
+        <div class="col-md-12 form-floating">
+          <input type="text" id="especialidadNombre" class="form-control"
+                 placeholder="Nombre"
+                 formControlName="nombre"
+                 [class.is-invalid]="nombre.invalid && nombre.touched">
+          <label for="especialidadNombre">Nombre</label>
+          @if (nombre.invalid && nombre.touched) {
+            <div class="invalid-feedback">
+              @if (nombre.errors?.['required']) { El nombre es obligatorio. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <textarea id="especialidadDescripcion" class="form-control"
+                    style="height: 100px;"
+                    placeholder="Descripción"
+                    formControlName="descripcion"
+                    [class.is-invalid]="descripcion.invalid && descripcion.touched">
+          </textarea>
+          <label for="especialidadDescripcion">Descripción</label>
+          @if (descripcion.invalid && descripcion.touched) {
+            <div class="invalid-feedback">
+              @if (descripcion.errors?.['required']) { La descripción es obligatoria. }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4 gap-2">
+        <button type="submit" class="btn-submit" [disabled]="especialidadForm.invalid || isLoading">
+          @if (isLoading) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Guardando...
+          } @else {
+            <span><i class="bi bi-save me-2"></i> Guardar Cambios</span>
+          }
+        </button>
+
+        <button type="button" class="btn-submit btn-secondary-style" (click)="volver()" [disabled]="isLoading">
+          <i class="bi bi-arrow-left me-2"></i> Cancelar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</section>

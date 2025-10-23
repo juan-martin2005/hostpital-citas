@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { EspecialidadService } from '../../../core/services/especialidad/especialidad';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ interface EspecialidadEntity {
   templateUrl: './especialidades.html',
   styleUrl: './especialidades.css'
 })
-export class Especialidades {
+export class Especialidades implements OnInit {
 
   constructor(private service: EspecialidadService, private router: Router){}
   especialidades: EspecialidadEntity[] = [];
@@ -33,8 +33,8 @@ export class Especialidades {
     })
   }
 
-  seleccionarEspecialidad(esp: EspecialidadEntity): void{
-    this.router.navigate(['/inicio/admin/nueva-especialidad'],{queryParams:{id:esp.id}})
+  seleccionarEspecialidad(esp: EspecialidadEntity): void {
+    this.router.navigate(['/inicio/admin/editar-especialidad', esp.id]);
   }
 
   eliminarEspecialidad(id : any): void{
@@ -67,4 +67,4 @@ export class Especialidades {
         })
 
       }
-      }
+}

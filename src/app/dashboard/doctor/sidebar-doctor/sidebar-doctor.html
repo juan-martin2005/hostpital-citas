@@ -8,21 +8,14 @@
       </a>
 
       <div class="sb-sidenav-menu-heading">Horarios</div>
-      <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHorarios" aria-expanded="false" aria-controls="collapseHorarios">
-        <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
-        Gestión de Horarios
-        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+      <a class="nav-link" routerLink="/inicio/doctor/horarios" routerLinkActive="active">
+        <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+        Mis Horarios
       </a>
-      <div class="collapse" id="collapseHorarios" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-        <nav class="sb-sidenav-menu-nested nav">
-          <a class="nav-link" routerLink="/inicio/doctor/horarios" routerLinkActive="active">
-            <i class="fas fa-list me-2"></i>Mis Horarios
-          </a>
-          <a class="nav-link" routerLink="/inicio/doctor/nuevo-horario" routerLinkActive="active">
-            <i class="fas fa-plus-circle me-2"></i>Crear Horario
-          </a>
-        </nav>
-      </div>
+      <a class="nav-link" routerLink="/inicio/doctor/nuevo-horario" routerLinkActive="active">
+        <div class="sb-nav-link-icon"><i class="fas fa-plus-circle"></i></div>
+        Crear Horario
+      </a>
 
       <div class="sb-sidenav-menu-heading">Atención</div>
       <a class="nav-link" routerLink="/inicio/doctor/citas" routerLinkActive="active">

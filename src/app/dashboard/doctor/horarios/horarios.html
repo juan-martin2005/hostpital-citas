@@ -1,1 +1,81 @@
-<p>horarios works!</p>
+<section id="horariosSection" class="section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bolder text-dark">
+      Horarios Disponibles
+    </h2>
+
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover table-borderless align-middle mb-0">
+            <thead class="bg-primary text-white text-uppercase sticky-top">
+            <tr>
+              <th scope="col" class="py-3 text-center">ID</th>
+              <th scope="col" class="py-3 text-center">Fecha</th>
+              <th scope="col" class="py-3 text-center">Hora Inicio</th>
+              <th scope="col" class="py-3 text-center">Hora Fin</th>
+              <th scope="col" class="py-3 text-center">Estado</th>
+              <th scope="col" class="py-3 text-center">Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @if (isLoading) {
+                <tr>
+                  <td colspan="6" class="text-center py-5 text-muted">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando horarios...</span>
+                    </div>
+                  </td>
+                </tr>
+              } @else if (horarios.length === 0) {
+                <tr>
+                  <td colspan="6" class="text-center py-5 text-muted fst-italic">
+                    <i class="bi bi-info-circle me-2"></i> No hay horarios registrados.
+                  </td>
+                </tr>
+              } @else {
+                @for (horario of horarios; track horario.id) {
+                  <tr class="text-center">
+
+                    <td class="fw-bold text-primary">{{ $index + 1 }}</td>
+
+                    <td>{{ horario.fecha }}</td>
+                    <td>{{ horario.horaInicio }}</td>
+                    <td>{{ horario.horaFin }}</td>
+
+                    <td>
+                      @let badgeInfo = getHorarioBadgeInfo(horario.estado);
+                      <span
+                        class="badge rounded-pill px-3 py-2 fw-semibold"
+                        [class]="badgeInfo.colorClass">
+                        {{ badgeInfo.text }}
+                      </span>
+                    </td>
+
+                    <td>
+                      <div class="d-flex justify-content-center flex-nowrap">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-2 shadow-sm"
+                          title="Editar horario"
+                          (click)="editarHorario(horario)">
+                          <i class="bi bi-pencil-square"></i>
+                        </button>
+
+
+                        <button class="btn btn-sm btn-outline-danger shadow-sm" title="Cancelar horario" (click)="eliminarHorario(horario.id)">
+                          <i class="bi bi-x-circle"></i>
+                        </button>
+
+                      </div>
+                    </td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

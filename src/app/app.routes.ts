@@ -27,6 +27,8 @@ import {NuevaEspecialidad} from './dashboard/admin/nueva-especialidad/nueva-espe
 import {NuevoDoctor} from './dashboard/admin/nuevo-doctor/nuevo-doctor';
 import {DoctoresAdmin} from './dashboard/admin/doctores-admin/doctores-admin';
 import {EditarDoctor} from './dashboard/admin/editar-doctor/editar-doctor';
+import {EditarHorario} from './dashboard/doctor/editar-horario/editar-horario';
+import {EditarEspecialidad} from './dashboard/admin/editar-especialidad/editar-especialidad';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: ''},
@@ -52,6 +54,7 @@ export const routes: Routes = [
       {path: '', component: InicioDoctor},
       {path: 'horarios', component: Horarios},
       {path: 'nuevo-horario', component: NuevoHorario},
+      {path: 'editar-horario/:id', component: EditarHorario},
       {path: 'citas', component: Citas},
       {path: 'perfil/doctor', component: PerfilDoctor},
 
@@ -61,6 +64,7 @@ export const routes: Routes = [
       {path: '', component: InicioAdmin},
       {path: 'especialidades', component: Especialidades},
       {path: 'nueva-especialidad', component: NuevaEspecialidad},
+      {path: 'editar-especialidad/:id', component: EditarEspecialidad},
       {path: 'doctores', component: DoctoresAdmin},
       {path: 'registrar-doctor', component: NuevoDoctor},
       {path: 'editar-doctor/:id', component: EditarDoctor},

@@ -1,1 +1,80 @@
-<p>nuevo-horario works!</p>
+<section id="horarioSection" class="contact section">
+  <div class="form-container">
+    <h3 class="text-center">Registrar Nuevo Horario</h3>
+    <p class="text-center text-muted mb-4">
+      Complete el formulario para agregar un nuevo horario.
+    </p>
+
+    <form [formGroup]="horarioForm" (ngSubmit)="onSubmit()" class="php-email-form">
+
+      <div class="row g-3">
+
+        <div class="col-md-4 form-floating">
+          <input type="date" class="form-control" formControlName="fecha"
+                 [class.is-invalid]="horarioForm.controls.fecha.invalid && horarioForm.controls.fecha.touched">
+          <label for="fecha">Fecha</label>
+
+          @if (horarioForm.controls.fecha.touched && horarioForm.controls.fecha.errors) {
+            <div class="invalid-feedback">
+              @if (horarioForm.controls.fecha.errors['required']) {
+                <div>Fecha es requerida</div>
+              }
+              @if (horarioForm.controls.fecha.errors['fechaInvalida']) {
+                <div>
+                  {{ horarioForm.controls.fecha.errors['fechaInvalida'] }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-4 form-floating">
+          <input type="time" class="form-control" formControlName="horaInicio"
+                 [class.is-invalid]="horarioForm.controls.horaInicio.invalid && horarioForm.controls.horaInicio.touched">
+          <label for="horaInicio">Hora Inicio</label>
+
+          @if (horarioForm.controls.horaInicio.touched && horarioForm.controls.horaInicio.errors) {
+            <div class="invalid-feedback">
+              @if (horarioForm.controls.horaInicio.errors['required']) {
+                <div>Hora de inicio es requerida</div>
+              }
+              @if (horarioForm.controls.horaInicio.errors['horaFueraRango']) {
+                <div>
+                  {{ horarioForm.controls.horaInicio.errors['horaFueraRango'] }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-4 form-floating">
+          <input type="time" class="form-control" formControlName="horaFin"
+                 [class.is-invalid]="horarioForm.controls.horaFin.invalid && horarioForm.controls.horaFin.touched">
+          <label for="horaFin">Hora Fin</label>
+
+          @if (horarioForm.controls.horaFin.touched && horarioForm.controls.horaFin.errors) {
+            <div class="invalid-feedback">
+              @if (horarioForm.controls.horaFin.errors['required']) {
+                <div>Hora de fin es requerida</div>
+              }
+              @if (horarioForm.controls.horaFin.errors['horaFueraRango']) {
+                <div>
+                  {{ horarioForm.controls.horaFin.errors['horaFueraRango'] }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+      </div>
+
+
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-primary btn-submit" [disabled]="isLoading || horarioForm.invalid">
+          {{ isLoading ? 'Registrando...' : 'Registrar Horario' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</section>

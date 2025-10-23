@@ -1,0 +1,32 @@
+<section class="section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold">Editar Horario</h2>
+
+    <form [formGroup]="horarioForm" (ngSubmit)="onSubmit()" class="card shadow-lg border-0 p-4 bg-white">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Fecha</label>
+        <input type="date" class="form-control" formControlName="fecha">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Hora Inicio</label>
+        <input type="time" class="form-control" formControlName="horaInicio">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Hora Fin</label>
+        <input type="time" class="form-control" formControlName="horaFin">
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary px-4 me-2" [disabled]="isLoading">
+          <i class="bi bi-save me-1"></i> Guardar Cambios
+        </button>
+        <button type="button" class="btn btn-secondary px-4" [disabled]="isLoading"
+                (click)="volver()">
+          <i class="bi bi-arrow-left me-1"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
