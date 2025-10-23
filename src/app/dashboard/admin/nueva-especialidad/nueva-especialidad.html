@@ -1,1 +1,51 @@
-<p>nueva-especialidad works!</p>
+<section id="doctorSection" class="contact section">
+  <div class="form-container">
+    <h3 class="text-center">Registrar Nueva Especialidad</h3>
+    <p class="text-center text-muted mb-4">
+      Complete el formulario para agregar una nueva especialidad al sistema.
+    </p>
+
+    <form [formGroup]="especialidadForm" (ngSubmit)="onSubmit(especialidadForm.value)" class="php-email-form">
+      @let nombre = especialidadForm.controls.nombre;
+      @let descripcion = especialidadForm.controls.descripcion;
+
+      <div class="row g-3">
+        <div class="col-md-12 form-floating">
+          <input type="text" id="doctorNombre" class="form-control"
+                 placeholder="Nombre"
+                 formControlName="nombre"
+                 [class.is-invalid]="nombre.invalid && nombre.touched">
+          <label for="doctorNombre">Nombre</label>
+          @if (nombre.invalid && nombre.touched) {
+            <div class="invalid-feedback">
+              @if (nombre.errors?.['required']) { Nombre es requerido. }
+              @else if (nombre.errors?.['minlength']) { Mínimo 6 caracteres. }
+            </div>
+          }
+        </div>
+
+        <div class="col-md-12 form-floating">
+          <textarea type="text" id="especialidadDescripcion" class="form-control"
+                style="height: 100px;"
+                 placeholder="Descripcion"
+                 formControlName="descripcion"
+                 [class.is-invalid]="descripcion.invalid && descripcion.touched">
+           </textarea>
+          <label for="especialidadDescripcion">Descripcion</label>
+          @if (descripcion.invalid && descripcion.touched) {
+            <div class="invalid-feedback">
+              @if (descripcion.errors?.['required']) { Descripcion es requerido. }
+              @else if (descripcion.errors?.['minlength']) { Mínimo 50 caracteres. }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn-submit">
+          <span>Registrar Especialidad <i class="bi bi-clipboard ms-2"></i></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
