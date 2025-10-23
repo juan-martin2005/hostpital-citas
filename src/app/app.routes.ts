@@ -1,3 +1,4 @@
+import { Especialidades } from './dashboard/admin/especialidades/especialidades';
 import { Routes } from '@angular/router';
 import {MainHome} from './info/pages/main-home/main-home';
 import {Home} from './info/pages/home/home';
@@ -16,7 +17,6 @@ import {InicioAdmin} from './dashboard/admin/inicio-admin/inicio-admin';
 import {AgendarCita} from './dashboard/paciente/agendar-cita/agendar-cita';
 import {MisCitas} from './dashboard/paciente/mis-citas/mis-citas';
 import {Doctores} from './dashboard/paciente/doctores/doctores';
-import {Especialidades} from './dashboard/paciente/especialidades/especialidades';
 import {InicioDoctor} from './dashboard/doctor/inicio-doctor/inicio-doctor';
 import {Horarios} from './dashboard/doctor/horarios/horarios';
 import {NuevoHorario} from './dashboard/doctor/nuevo-horario/nuevo-horario';

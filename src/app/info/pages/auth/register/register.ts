@@ -104,8 +104,8 @@ export class RegisterComponent {
 
     if (!this.confirmarPassword()) {
       Swal.fire({
-        title: 'Error',
-        text: 'Las contraseñas no coinciden.',
+        title: 'Error de Validación',
+        text: 'Las contraseñas no coinciden. Por favor, revísalas.',
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });

@@ -22,6 +22,9 @@ export class EspecialidadService {
   listarEspecialidades(): Observable<EspecialidadEntity[]> {
     return this.http.get<EspecialidadEntity[]>(this.url);
   }
+  listarEspecialidadById(id: number | null): Observable<EspecialidadEntity> {
+    return this.http.get<EspecialidadEntity>(`${this.url}/${id}`);
+  }
 
   registrarEspecialidad(especialidad: EspecialidadEntity): Observable<EspecialidadService> {
     return this.http.post<EspecialidadService>(this.url, especialidad);

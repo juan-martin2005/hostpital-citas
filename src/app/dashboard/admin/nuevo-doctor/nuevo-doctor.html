@@ -112,6 +112,11 @@
                  placeholder="Contraseña"
                  formControlName="password"
                  [class.is-invalid]="password.invalid && password.touched">
+                 <!--  ver contraseña-->
+                 <a role="button" class="position-absolute top-50 end-0 translate-middle-y me-4"
+                  [ngClass]="password.invalid && password.touched ? 'd-none' : 'd-block'">
+                  <i (click)="togglePasswordVisibility()" [ngClass]=" seePassword ?'bi bi-eye' : 'bi-eye-slash'"></i>
+                </a>
           <label for="doctorPassword">Contraseña</label>
           @if (password.invalid && password.touched) {
             <div class="invalid-feedback">
@@ -126,6 +131,11 @@
                  placeholder="Confirmar Contraseña"
                  formControlName="confirmPassword"
                  [class.is-invalid]="(confirmPassword.invalid && confirmPassword.touched) || (confirmPassword.touched && !confirmarPassword())">
+                 <!--  ver contraseña-->
+                 <a role="button" class="position-absolute top-50 end-0 translate-middle-y me-4"
+                  [ngClass]="(confirmPassword.invalid && confirmPassword.touched) || (confirmPassword.touched && !confirmarPassword()) ? 'd-none' : 'd-block'" >
+                  <i (click)="toggleConfirmPasswordVisibility()" [ngClass]=" seeConfirmPassword ?'bi bi-eye' : 'bi-eye-slash'"></i>
+                </a>
           <label for="doctorConfirmPassword">Confirmar Contraseña</label>
           @if (confirmPassword.touched) {
             <div class="invalid-feedback">
