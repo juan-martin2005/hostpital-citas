@@ -30,6 +30,7 @@ import {EditarDoctor} from './dashboard/admin/editar-doctor/editar-doctor';
 import {EditarHorario} from './dashboard/doctor/editar-horario/editar-horario';
 import {EditarEspecialidad} from './dashboard/admin/editar-especialidad/editar-especialidad';
 import {EspecialidadesPaciente} from './dashboard/paciente/especialidades/especialidades';
+import { MetodoPago } from './mercado-pago/metodo-pago';
 
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: ''},
@@ -41,6 +42,7 @@ export const routes: Routes = [
       {path: 'doctors', component: Doctors},
       {path: 'contact', component: Contact},
     ]},
+  {path: 'mercado-pago', component: MetodoPago},
   {path: 'inicio/paciente', component: Paciente, canActivate: [pacienteGuard],
     children: [
       {path: '', component: InicioPaciente},
