@@ -1,1 +1,66 @@
-<p>mis-citas works!</p>
+<section class="section">
+
+
+<div class="container">
+  <h2 class="text-center mb-5 fw-bolder text-dark">
+    Mis citas médicas
+  </h2>
+
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover table-borderless align-middle mb-0">
+          <thead class="bg-primary text-white text-uppercase sticky-top">
+            <tr>
+              <th scope="col" class="py-3 text-center">N° Cita</th>
+              <th scope="col" class="py-3 text-center">Doctor</th>
+              <th scope="col" class="py-3 text-center">Especialidad</th>
+              <th scope="col" class="py-3 text-center">Fecha</th>
+              <th scope="col" class="py-3 text-center">Hora inicio</th>
+              <th scope="col" class="py-3 text-center">Hora final</th>
+              <th scope="col" class="py-3 text-center">Estado</th>
+              <th scope="col" class="py-3 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (citaMedica.length === 0) {
+              <tr>
+                <td colspan="8" class="text-center py-5 text-muted fst-italic">
+                  <i class="bi bi-info-circle me-2"></i> No hay citas registradas.
+                </td>
+              </tr>
+            }
+            @else {
+              @for (cita of citaMedica; track cita.id ) {
+                <tr class="text-center">
+                  <td class="fw-bold text-primary">{{ cita.id }}</td>
+                  <td>{{ cita.nombreDoctor }}</td>
+                  <td>{{ cita.especialidadDoctor }}</td>
+                  <td>{{ cita.horarioDoctor?.fecha }}</td>
+                  <td>{{ cita.horarioDoctor?.horaInicio }}</td>
+                  <td>{{ cita.horarioDoctor?.horaFin }}</td>
+
+                  <td>
+                    @let badgeEstado = getCitaBadgeInfo(cita.estado);
+                    <span
+                      class="badge rounded-pill px-3 py-2 fw-semibold"
+                      [class]="badgeEstado.colorClass">
+                      {{ cita.estado }}
+                    </span>
+                  <td>
+                    <div class="d-flex gap-2 justify-content-center flex-nowrap">
+                      <button title="Cancelar cita" class="btn btn-sm btn-outline-danger" (click)="cancelarCita(cita.id!)">
+                        <i class="bi bi-x-circle"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
