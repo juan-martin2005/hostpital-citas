@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MercadoPagoService } from './service/service';
-import { MercadoPagoBrickService } from './service/service-brick';
+import { MercadoPagoBrickService } from '../service/service-brick';
 
 
 
@@ -12,7 +11,7 @@ import { MercadoPagoBrickService } from './service/service-brick';
 })
 export class MetodoPago{
 
-  constructor(private mercadoPagoService: MercadoPagoService, private mercadoPagoBrickService: MercadoPagoBrickService){}
+  constructor(private mercadoPagoBrickService: MercadoPagoBrickService){}
   ngOnInit(){
     this.mercadoPagoBrickService.getPrefenceId().subscribe({
       next: (response) =>{
@@ -20,5 +19,8 @@ export class MetodoPago{
         this.mercadoPagoBrickService.loadMpBrick(response.id);
       }
     })
+  }
+  ngOnDestroy(): void {
+    this.mercadoPagoBrickService.destruirInstance()
   }
 }

@@ -45,7 +45,7 @@ export class Login {
         next: () => {
           Swal.fire({
             theme: 'bootstrap-5',
-            title: "¡Inicio de Sesión Exitoso!",
+            title: "Inicio de Sesión Exitoso!",
             icon: "success",
             draggable: true,
             confirmButtonText: "Ir a Inicio"
