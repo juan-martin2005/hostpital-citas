@@ -40,7 +40,7 @@ export class Login {
   onSubmit(form: any) {
     if (this.loginForm.valid) {
       console.log('Datos de Login enviados:', this.loginForm.value);
-
+      if(!this.service.geExp()){localStorage.removeItem('token')}
       this.service.login(form).subscribe({
         next: () => {
           Swal.fire({

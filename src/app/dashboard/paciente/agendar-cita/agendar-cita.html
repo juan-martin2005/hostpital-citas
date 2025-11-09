@@ -1,6 +1,141 @@
 <section class="section">
   <div class="container">
     <h2>Reserva tu cita médica en solo minutos</h2>
+    <div class="py-5">
+      <div class="row g-4">
+        <!-- PANEL CALENDARIO -->
+        <div class="col-lg-6">
+          <div class="card shadow-sm border-0 rounded-4" style="min-width: 540px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-calendar"></i>
+                  <p class="fw-bold mb-0">{{ currentMonth.toLocaleDateString('es-PE', { month: 'long', year: 'numeric' })}}</p>
+                </div>
+                <div>
+                  <i class="btn btn-light btn-sm me-1 bi-caret-left-fill" role="button" (click)="prevMonth()"></i>
+                  <button class="btn btn-light btn-sm me-1" (click)="currentMonth = today">Hoy</button>
+                  <i class="btn btn-light btn-sm bi-caret-right-fill" role="button" (click)="nextMonth()"></i>
+                </div>
+              </div>
+
+              <div class="row text-center small fw-semibold text-secondary mb-2">
+                @for(day of ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom']; track $index) {
+                <div class="col">{{ day }}</div>
+                }
+              </div>
+
+              @for(week of monthGrid; track $index) {
+              <div class="row g-2 mb-2">
+                @for(day of week; track $index) {
+                  @if(!day) {
+                    <div class="col"></div>
+                  }@else {
+                    <div class="col text-center">
+                      <button class="btn w-100 rounded-3 py-3 position-relative"
+                        [ngClass]="{
+                          'bg-info  border border-1 border-primary': selectedDay && (day | date: 'yyyy-MM-dd') === (selectedDay | date: 'yyyy-MM-dd'),
+                          'btn-bg-light ': !selectedDay || (day | date: 'yyyy-MM-dd') !== (selectedDay | date: 'yyyy-MM-dd'),
+                          'border-success text-success': isToday(day),
+                        }"
+                        (click)="selectDay(day)"
+                        [disabled]="">
+                        @if(day) {
+                          <div>
+                            <div class="fw-medium small">{{ day.getDate() }}</div>
+                            <div class="text-muted small">{{ day.toLocaleDateString('es-PE', {weekday: 'short'}) }}
+                          </div>
+
+                          @if(hasDocDisponible(day)) {
+                            <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                              <span class="badge rounded-circle p-1 " style="background-color: #a4fce0; display:inline-block;">
+                              </span>
+                            </div>
+                          }
+                        </div>
+                        }
+                      </button>
+                    </div>
+                  }
+                }
+              </div>
+              }
+              <p class="text-muted small mt-2">Haz clic sobre un día para ver médicos disponibles.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL DOCTORES -->
+        <div class="col-lg-6">
+          <div class="card shadow-sm border-0 rounded-4" style="min-width: 540px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <small class="text-muted">Disponible</small>
+                  <div class="fw-bold">{{ selectedDay ? (selectedDay.toLocaleDateString()) : 'Selecciona una fecha' }}
+                  </div>
+                </div>
+                <div class="input-group input-group-sm" style="width: 240px;">
+                  <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                  <input type="text" class="form-control border-0 bg-light" placeholder="Buscar doctor o especialidad"
+                    [(ngModel)]="query" />
+                </div>
+              </div>
+
+              @if(selectedDay) {
+                @if(doctorDisponible.length) {
+                  <div class="d-flex flex-column gap-3">
+                    @for(doc of doctorDisponible; track doc.id) {
+                      <button class="border rounded-3 p-3 shadow-sm d-flex justify-content-between align-items-center" (click)="docSeleccionado = doc">
+                        <div class="d-flex align-items-center gap-3">
+                          <div class="rounded-circle bg-light d-flex align-items-center justify-content-center"
+                            style="width:45px;height:45px;">
+                            <span class="fw-bold text-secondary">{{ doc.nombre?.charAt(0) }}</span>
+                          </div>
+                          <div>
+                            <div class="fw-semibold"><span> {{doc.sexo === 'F' ? 'Dra.' : 'Dr.'}}</span> {{ doc.nombre }} {{ doc.apellido }}</div>
+                            <div class="text-muted small">{{ doc.especialidad }}</div>
+                          </div>
+                        </div>
+                      </button>
+                    }
+                  </div>
+                } @else {
+                  <div class="alert alert-light text-center text-muted mt-3" >No hay médicos disponibles ese día.</div>
+                }
+              } @else {
+                <div class="alert alert-light text-center text-muted">Selecciona un día en el calendario.</div>
+              }
+
+              @if(docSeleccionado) {
+                <div class="mt-4 border-top pt-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="fw-bold"><span> {{docSeleccionado.sexo === 'F' ? 'Dra.' : 'Dr.'}}</span> {{ docSeleccionado.nombre }} {{ docSeleccionado.apellido }}</div>
+                      <small class="text-muted">{{ docSeleccionado.especialidad }}</small>
+                      <div class="text-muted small mt-1">{{ docSeleccionado.email }}</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="docSeleccionado = null">Cerrar</button>
+                  </div>
+
+                  <div class="mt-3">
+                    <small class="text-muted d-block mb-2">Horas disponibles</small>
+                    <div class="d-flex flex-wrap gap-2">
+                      @for(t of docSeleccionado.horarios; track $index) {
+                      <button class="btn btn-light btn-sm border" (click)="reservar(docSeleccionado, t)">
+                        <i class="bi bi-clock me-1"></i>{{ t.horaInicio  }} a {{ t.horaFin }}
+                      </button>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <button class="btn btn-primary" routerLink="/inicio/paciente/mercado-pago">Pagar Cita</button>
   </div>
 </section>

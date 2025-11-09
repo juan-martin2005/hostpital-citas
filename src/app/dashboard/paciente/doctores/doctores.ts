@@ -4,7 +4,6 @@ import {DoctorService} from '../../../core/services/doctor/doctor';
 interface DoctorEntity {
   id?: number;
   email?: string;
-  password?: string;
   nombre?: string;
   apellido?: string;
   telefono?: string;
