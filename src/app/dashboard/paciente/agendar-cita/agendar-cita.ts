@@ -1,8 +1,10 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { FormsModule} from '@angular/forms';
+import { Router, RouterLink } from "@angular/router";
 import { DoctorService } from '../../../core/services/doctor/doctor';
+import Swal from 'sweetalert2';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 interface DoctorEntity {
@@ -21,17 +23,18 @@ interface HorarioEntity {
   fecha?: string;
   horaInicio?: string;
   horaFin?: string;
+  estado?: string;
 }
 
 @Component({
   selector: 'app-agendar-cita',
-  imports: [RouterLink, FormsModule, NgClass, DatePipe],
+  imports: [FormsModule, NgClass, DatePipe, NgxPaginationModule],
   templateUrl: './agendar-cita.html',
   styleUrl: './agendar-cita.css'
 })
 export class AgendarCita {
 
-
+  page!: number;
   today = new Date();
   currentMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
   selectedDay: Date | null = null;
@@ -39,7 +42,7 @@ export class AgendarCita {
   docSeleccionado: DoctorEntity | null= null;
   doctores: DoctorEntity[] = [];
   abreviatura = ''
-  constructor(private doctorService: DoctorService) {
+  constructor(private doctorService: DoctorService, private router: Router) {
     this.listaDoctores();
   }
 
@@ -104,7 +107,6 @@ export class AgendarCita {
     !this.doctorDisponible.length ? this.docSeleccionado = null: ''
   }
 
-
   get doctorDisponible() {
     if (!this.selectedDay) return [];
     const fechaSeleccionada = this.toYMD(this.selectedDay);
@@ -114,8 +116,38 @@ export class AgendarCita {
       .filter(d => (d.nombre + ' ' + d.especialidad).toLowerCase().includes(this.query.toLowerCase()));
   }
 
-
   reservar(doctor: DoctorEntity, time: HorarioEntity) {
-    alert(`Reservado con ${doctor.nombre} el ${this.toYMD(this.selectedDay!)} a las ${time.horaInicio} - ${time.horaFin}`);
+    Swal.fire({
+      title: 'Confirmar cita',
+      text: `¿Desea reservar una cita con el Dr. ${doctor.nombre} ${doctor.apellido} el ${time.fecha} a las ${time.horaInicio}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, reservar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(time.estado !== 'LIBRE'){
+          Swal.fire({
+            title: 'El horario no disponible',
+            text: 'El horario seleccionado no está disponible.',
+            icon: 'error',
+          })
+          return
+        }
+        Swal.fire({
+          title: 'A un paso para poder hacer tu reserva',
+          text: 'Redirigiendo a la página de pago...',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        })
+        setTimeout(() => {
+          this.router.navigate(['/inicio/paciente/mercado-pago'], { queryParams: { doctorId: doctor.id, horarioId: time.id }});
+          Swal.close();
+        }, 1500);
+      }
+    })
   }
 }

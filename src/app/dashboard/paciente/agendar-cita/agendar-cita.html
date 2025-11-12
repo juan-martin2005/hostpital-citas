@@ -4,8 +4,8 @@
     <div class="py-5">
       <div class="row g-4">
         <!-- PANEL CALENDARIO -->
-        <div class="col-lg-6">
-          <div class="card shadow-sm border-0 rounded-4" style="min-width: 540px;">
+        <div class="col-lg-6 col-md-12">
+          <div class="card shadow-sm border-0 rounded-4" style="min-width: 440px;">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="d-flex align-items-center gap-3">
@@ -31,15 +31,17 @@
                   @if(!day) {
                     <div class="col"></div>
                   }@else {
-                    <div class="col text-center">
+                    <div class="bor-buton col text-center" [style.cursor]="isBeforeToday(day) ? 'not-allowed' : 'pointer'">
                       <button class="btn w-100 rounded-3 py-3 position-relative"
                         [ngClass]="{
-                          'bg-info  border border-1 border-primary': selectedDay && (day | date: 'yyyy-MM-dd') === (selectedDay | date: 'yyyy-MM-dd'),
-                          'btn-bg-light ': !selectedDay || (day | date: 'yyyy-MM-dd') !== (selectedDay | date: 'yyyy-MM-dd'),
-                          'border-success text-success': isToday(day),
+                          'bg-info border border-1 border-primary': selectedDay && (day | date: 'yyyy-MM-dd') === (selectedDay | date: 'yyyy-MM-dd'),
+                          'btn-bg-light': !selectedDay || (day | date: 'yyyy-MM-dd') !== (selectedDay | date: 'yyyy-MM-dd'),
+                          'text-success': isToday(day),
+                          'opacity-50': isBeforeToday(day),
                         }"
-                        (click)="selectDay(day)"
-                        [disabled]="">
+                        [disabled]="isBeforeToday(day)"
+                        (click)="!isBeforeToday(day) && selectDay(day) "
+                        >
                         @if(day) {
                           <div>
                             <div class="fw-medium small">{{ day.getDate() }}</div>
@@ -66,7 +68,7 @@
         </div>
 
         <!-- PANEL DOCTORES -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12">
           <div class="card shadow-sm border-0 rounded-4" style="min-width: 540px;">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-3">
@@ -85,7 +87,7 @@
               @if(selectedDay) {
                 @if(doctorDisponible.length) {
                   <div class="d-flex flex-column gap-3">
-                    @for(doc of doctorDisponible; track doc.id) {
+                    @for(doc of doctorDisponible | paginate: {itemsPerPage: 4, currentPage: page}; track doc.id) {
                       <button class="border rounded-3 p-3 shadow-sm d-flex justify-content-between align-items-center" (click)="docSeleccionado = doc">
                         <div class="d-flex align-items-center gap-3">
                           <div class="rounded-circle bg-light d-flex align-items-center justify-content-center"
@@ -100,6 +102,9 @@
                       </button>
                     }
                   </div>
+                  <nav class="d-flex justify-content-md-center mt-2" >
+                    <pagination-controls class="mt-2 pt-2" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                  </nav>
                 } @else {
                   <div class="alert alert-light text-center text-muted mt-3" >No hay médicos disponibles ese día.</div>
                 }
@@ -108,7 +113,7 @@
               }
 
               @if(docSeleccionado) {
-                <div class="mt-4 border-top pt-3">
+                <div class="mt-2 border-top pt-2">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
                       <div class="fw-bold"><span> {{docSeleccionado.sexo === 'F' ? 'Dra.' : 'Dr.'}}</span> {{ docSeleccionado.nombre }} {{ docSeleccionado.apellido }}</div>
@@ -122,10 +127,13 @@
                     <small class="text-muted d-block mb-2">Horas disponibles</small>
                     <div class="d-flex flex-wrap gap-2">
                       @for(t of docSeleccionado.horarios; track $index) {
-                      <button class="btn btn-light btn-sm border" (click)="reservar(docSeleccionado, t)">
-                        <i class="bi bi-clock me-1"></i>{{ t.horaInicio  }} a {{ t.horaFin }}
-                      </button>
+                        @if(t.fecha === (selectedDay | date: 'yyyy-MM-dd')) {
+                          <button class="btn btn-light btn-sm border" (click)="reservar(docSeleccionado, t)" [disabled]="t.estado !== 'LIBRE'">
+                            <i class="bi bi-clock me-1"></i>{{ t.horaInicio  }} a {{ t.horaFin }}
+                          </button>
+                        }
                       }
+                      <p class="text-muted small">Selecciona una hora para reservar tu cita.</p>
                     </div>
                   </div>
                 </div>
@@ -135,7 +143,5 @@
         </div>
       </div>
     </div>
-
-    <button class="btn btn-primary" routerLink="/inicio/paciente/mercado-pago">Pagar Cita</button>
   </div>
 </section>

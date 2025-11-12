@@ -1,0 +1,3 @@
+.bor-buton button:disabled {
+  border: none;
+}

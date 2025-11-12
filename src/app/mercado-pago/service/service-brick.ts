@@ -21,7 +21,7 @@ export class MercadoPagoBrickService {
     return this.http.post<any>(`${this.apiUrl}/proceso_pago`, {})
   }
 
-  public async loadMpBrick(preference: string) {
+  public async loadMpBrick(preference: string, precioCIta: number, doctorId: number, horarioId: number) {
     await loadMercadoPago();
     this.mp = new window.MercadoPago(this.publicKey, {
       locale: 'es-PE'
@@ -31,7 +31,7 @@ export class MercadoPagoBrickService {
       const settings = {
         initialization: {
           preferenceId: preference,
-          amount: 150, // monto total a pagar
+          amount: precioCIta, // monto total a pagar
         },
         customization: {
           visual: {
@@ -80,7 +80,7 @@ export class MercadoPagoBrickService {
                   // ¡PAGO PROCESADO!
                   console.log(paymentResponse);
 
-                  this.router.navigate(['/inicio/paciente/estado-pago'], { queryParams: { paymentId: paymentResponse.id , status: paymentResponse.status } });
+                  this.router.navigate(['/inicio/paciente/estado-pago'], { queryParams: { paymentId: paymentResponse.id , status: paymentResponse.status, doctorId: doctorId, horarioId: horarioId} });
                   // if (paymentResponse.status === 'approved') {
                   //   // REDIRIGIR A PÁGINA DE ÉXITO
                   //   alert('¡Pago aprobado!');
