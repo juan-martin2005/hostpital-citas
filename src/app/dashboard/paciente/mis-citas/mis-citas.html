@@ -23,7 +23,16 @@
             </tr>
           </thead>
           <tbody>
-            @if (citaMedica.length === 0) {
+            @if (isLoading){
+              <tr>
+                <td colspan="9" class="text-center py-5 text-muted">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                  </div>
+                </td>
+              </tr>
+            }
+            @else if (citaMedica.length === 0) {
               <tr>
                 <td colspan="8" class="text-center py-5 text-muted fst-italic">
                   <i class="bi bi-info-circle me-2"></i> No hay citas registradas.
@@ -36,9 +45,9 @@
                   <td class="fw-bold text-primary">{{ cita.id }}</td>
                   <td>{{ cita.nombreDoctor }}</td>
                   <td>{{ cita.especialidadDoctor }}</td>
-                  <td>{{ cita.horarioDoctor?.fecha }}</td>
-                  <td>{{ cita.horarioDoctor?.horaInicio }}</td>
-                  <td>{{ cita.horarioDoctor?.horaFin }}</td>
+                  <td>{{ cita.fecha }}</td>
+                  <td>{{ cita.horaInicio }}</td>
+                  <td>{{ cita.horaFin }}</td>
 
                   <td>
                     @let badgeEstado = getCitaBadgeInfo(cita.estado);

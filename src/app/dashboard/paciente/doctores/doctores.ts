@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DoctorService} from '../../../core/services/doctor/doctor';
+import { RouterLink } from "@angular/router";
 
 interface DoctorEntity {
   id?: number;
@@ -25,9 +26,12 @@ interface HorarioEntity {
 @Component({
   selector: 'app-doctores',
   templateUrl: './doctores.html',
-  styleUrls: ['./doctores.css']
+  styleUrls: ['./doctores.css'],
+  imports: [RouterLink]
 })
 export class Doctores implements OnInit {
+
+  isLoading = true;
 
   doctores: DoctorEntity[] = [];
 
@@ -37,7 +41,7 @@ export class Doctores implements OnInit {
     this.doctorService.listarTodosLosDoctores().subscribe({
       next: (data) => {
         this.doctores = data;
-        console.log('Doctores:', data);
+        this.isLoading = false;
       },
       error: (err) => console.error('Error al obtener doctores', err)
     });

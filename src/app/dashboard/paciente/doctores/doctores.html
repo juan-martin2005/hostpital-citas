@@ -20,30 +20,36 @@
   <div class="container">
 
     <div class="row gy-4 justify-content-center">
+      @if (isLoading){
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      }
+      @else {
+        @for (doc of doctores; track doc.id; let i = $index) {
 
-      @for (doc of doctores; track doc.id; let i = $index) {
+          <div class="col-xl-4 col-lg-4 col-md-6">
+            <div class="doctor-card">
 
-        <div class="col-xl-4 col-lg-4 col-md-6">
-          <div class="doctor-card">
+              <div class="doctor-content">
+                <h4 class="doctor-name">Dr. {{ doc.nombre }} {{ doc.apellido }}</h4>
 
-            <div class="doctor-content">
-              <h4 class="doctor-name">Dr. {{ doc.nombre }} {{ doc.apellido }}</h4>
+                <span class="doctor-specialty">{{ doc.especialidad }}</span>
 
-              <span class="doctor-specialty">{{ doc.especialidad }}</span>
+                <div class="doctor-contact-info">
+                  <p><strong>Email:</strong> {{ doc.email }}</p>
+                  <p><strong>Teléfono:</strong> {{ doc.telefono }}</p>
+                </div>
 
-              <div class="doctor-contact-info">
-                <p><strong>Email:</strong> {{ doc.email }}</p>
-                <p><strong>Teléfono:</strong> {{ doc.telefono }}</p>
+                <a routerLink="/inicio/paciente/agendar-cita" class="btn-appointment">Reservar Cita</a>
               </div>
-
-              <a href="appointment.html" class="btn-appointment">Reservar Cita</a>
             </div>
           </div>
-        </div>
-      } @empty {
-        <div class="col-12">
-          <p class="text-center">No hay doctores disponibles en este momento.</p>
-        </div>
+        } @empty {
+          <div class="col-12">
+            <p class="text-center">No hay doctores disponibles en este momento.</p>
+          </div>
+        }
       }
     </div>
 

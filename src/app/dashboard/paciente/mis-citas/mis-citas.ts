@@ -2,17 +2,13 @@ import { Component } from '@angular/core';
 import { CitaMedicaService } from '../../../core/services/cita-medica/cita-medica';
 import Swal from 'sweetalert2';
 
-interface Horario {
-  id?: number;
-  fecha?: string;
-  horaInicio?: string;
-  horaFin?: string;
-}
 interface CitaMedica {
   id?: number;
   nombreDoctor?: string;
   especialidadDoctor?: string;
-  horarioDoctor?: Horario;
+  fecha?: string;
+  horaInicio?: string;
+  horaFin?: string;
   estado?: string;
 }
 
