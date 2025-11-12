@@ -20,6 +20,7 @@ export class EditarEspecialidad implements OnInit {
   especialidadForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
     descripcion: new FormControl('', Validators.required),
+    precio: new FormControl(0, Validators.required),
   });
 
   especialidadId!: number;
@@ -49,7 +50,8 @@ export class EditarEspecialidad implements OnInit {
 
         this.especialidadForm.patchValue({
           nombre: especialidad.nombre,
-          descripcion: especialidad.descripcion
+          descripcion: especialidad.descripcion,
+          precio: especialidad.precio
         });
 
         this.isLoading = false;
@@ -73,7 +75,8 @@ export class EditarEspecialidad implements OnInit {
 
     const especialidadData = {
       nombre: formValue.nombre!,
-      descripcion: formValue.descripcion!
+      descripcion: formValue.descripcion!,
+      precio: formValue.precio!
     };
 
     this.especialidadService.modificarEspecialidad(this.especialidadId, especialidadData).subscribe({

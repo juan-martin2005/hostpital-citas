@@ -53,7 +53,7 @@
           @if (email.invalid && email.touched) {
             <div class="invalid-feedback">
               @if (email.errors?.['required']) { Correo es requerido. }
-              @else if (email.errors?.['email'] || email.errors?.['pattern']) { El correo debe tener el formato xyz@hospital.com }
+              @else if (email.errors?.['pattern']) { El correo debe tener el formato xyz@hospital.com }
             </div>
           }
         </div>

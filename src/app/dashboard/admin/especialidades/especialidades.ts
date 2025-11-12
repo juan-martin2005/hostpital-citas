@@ -2,20 +2,25 @@ import {Component, OnInit} from '@angular/core';
 import { EspecialidadService } from '../../../core/services/especialidad/especialidad';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { NgxPaginationModule } from "ngx-pagination";
 
 interface EspecialidadEntity {
   id?: number;
   nombre?: string;
   descripcion?: string;
+  precio?: number;
 }
 
 @Component({
   selector: 'app-especialidades',
-  imports: [],
+  imports: [NgxPaginationModule],
   templateUrl: './especialidades.html',
   styleUrl: './especialidades.css'
 })
 export class Especialidades implements OnInit {
+
+  isLoading = false;
+  page!: number;
 
   constructor(private service: EspecialidadService, private router: Router){}
   especialidades: EspecialidadEntity[] = [];
@@ -26,9 +31,11 @@ export class Especialidades implements OnInit {
     this.cargarEspecialidades()
   }
   cargarEspecialidades(): void{
+    this.isLoading = true;
     this.service.listarEspecialidades().subscribe({
       next: (response) => {
         this.especialidades = response;
+        this.isLoading = false;
       }
     })
   }

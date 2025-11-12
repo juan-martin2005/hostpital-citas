@@ -8,6 +8,7 @@ interface EspecialidadFormControls {
   id: FormControl<number>;
   nombre: FormControl<string>;
   descripcion: FormControl<string>;
+  precio: FormControl<number | null>;
 }
 @Component({
   selector: 'app-nueva-especialidad',
@@ -29,7 +30,12 @@ export class NuevaEspecialidad {
     descripcion: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(50)]
+    }),
+    precio: new FormControl(null , {
+      nonNullable: true,
+      validators: [Validators.required]
     })
+
   })
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(query =>{
@@ -47,14 +53,15 @@ export class NuevaEspecialidad {
     }
     const especialidadData = {
       nombre: form.nombre,
-      descripcion: form.descripcion
+      descripcion: form.descripcion,
+      precio: form.precio
     }
     if(this.especialidadForm.controls.id.value > 0){
       this.service.modificarEspecialidad(form.id,especialidadData).subscribe({
         next: (response) => {
           Swal.fire({
-            title: '¡Modificación Exitosa!',
-            text: 'La especialidad ha sido modificada',
+            title: '!Registro Exitoso!',
+            text: 'La especialidad ha agregada',
             icon: 'success',
             confirmButtonText: 'Aceptar'
           }).then(() => {

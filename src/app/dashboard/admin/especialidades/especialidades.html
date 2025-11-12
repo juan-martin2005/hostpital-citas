@@ -13,22 +13,33 @@
               <th scope="col" class="py-3 text-center">ID</th>
               <th scope="col" class="py-3">Nombre</th>
               <th scope="col" class="py-3 d-none d-md-table-cell">Descripción</th>
+              <th scope="col" class="py-3 d-none d-md-table-cell">Precio Consulta</th>
               <th scope="col" class="py-3 text-center">Acciones</th>
             </tr>
             </thead>
             <tbody>
-              @if (especialidades.length === 0) {
+              @if (isLoading){
+                <tr>
+                  <td colspan="9" class="text-center py-5 text-muted">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                    </div>
+                  </td>
+                </tr>
+              }
+              @else if (especialidades.length === 0) {
                 <tr>
                   <td colspan="4" class="text-center py-5 text-muted fst-italic">
                     <i class="bi bi-info-circle me-2"></i> No hay especialidades registradas
                   </td>
                 </tr>
               } @else {
-                @for (esp of especialidades; track esp.id) {
+                @for (esp of especialidades | paginate: {itemsPerPage: 10, currentPage: page}; track esp.id) {
                   <tr>
                     <td class="fw-bold text-primary text-center">{{ esp.id }}</td>
                     <td class="text-start">{{ esp.nombre }}</td>
                     <td class="text-muted text-start d-none d-md-table-cell">{{ esp.descripcion }}</td>
+                    <td class="text-muted text-start d-none d-md-table-cell">S/.{{ esp.precio }}</td>
                     <td class="text-center">
                       <div class="d-flex justify-content-center flex-nowrap gap-2">
                         <button class="btn btn-sm btn-outline-primary shadow-sm" (click)="seleccionarEspecialidad(esp)" title="Editar especialidad">
@@ -46,6 +57,9 @@
               }
             </tbody>
           </table>
+          <nav class="d-flex justify-content-md-center mt-2" >
+            <pagination-controls class="mt-2 pt-2" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+          </nav>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DoctorService } from '../../../core/services/doctor/doctor';
 import { UsuarioService } from '../../../core/services/usuario/usuario';
 import Swal from 'sweetalert2';
+import { NgxPaginationModule } from "ngx-pagination";
 
 interface DoctorEntity {
   id?: number;
@@ -30,7 +31,7 @@ interface HorarioEntity {
 @Component({
   selector: 'app-doctores-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxPaginationModule],
   templateUrl: './doctores-admin.html',
   styleUrl: './doctores-admin.css',
 })
@@ -38,6 +39,7 @@ interface HorarioEntity {
 export class DoctoresAdmin implements OnInit {
   doctores: DoctorEntity[] = [];
   isLoading = false;
+  page!: number;
 
   constructor(
     private doctorService: DoctorService,

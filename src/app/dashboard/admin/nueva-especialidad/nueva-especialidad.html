@@ -8,6 +8,7 @@
     <form [formGroup]="especialidadForm" (ngSubmit)="onSubmit(especialidadForm.value)" class="php-email-form">
       @let nombre = especialidadForm.controls.nombre;
       @let descripcion = especialidadForm.controls.descripcion;
+      @let precio = especialidadForm.controls.precio;
 
       <div class="row g-3">
         <div class="col-md-12 form-floating">
@@ -36,6 +37,19 @@
             <div class="invalid-feedback">
               @if (descripcion.errors?.['required']) { Descripcion es requerido. }
               @else if (descripcion.errors?.['minlength']) { Mínimo 50 caracteres. }
+            </div>
+          }
+        </div>
+        <div class="col-md-12 form-floating">
+          <input id="especialidadPrecio" class="form-control"
+                    type="number"
+                    placeholder="Precio"
+                    formControlName="precio"
+                    [class.is-invalid]="precio.invalid && precio.touched">
+          <label for="especialidadPrecio">Precio</label>
+          @if (precio.invalid && precio.touched) {
+            <div class="invalid-feedback">
+              @if (precio.errors?.['required']) { El precio es obligatorio. }
             </div>
           }
         </div>

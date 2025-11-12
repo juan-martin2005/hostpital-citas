@@ -69,8 +69,7 @@ export class NuevoDoctor implements OnInit {
       nonNullable: true,
       validators: [
         Validators.required,
-        Validators.email,
-        Validators.pattern('^[a-zA-Z0-9._%+-]+@hospital\\.com$')
+        Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._-]+@hospital\\.com$')
       ]
     }),
     telefono: new FormControl('', {
