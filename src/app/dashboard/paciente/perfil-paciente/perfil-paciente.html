@@ -1,12 +1,115 @@
 <section class="section">
-  <div class="container">
-    <h2>Tu Perfil de Paciente</h2>
-    <p>Gestiona tu información personal y médica aquí.</p>
-    <p>Nombre: {{ infoPaciente.nombre }}</p>
-    <p>Apellido: {{ infoPaciente.apellido }}</p>
-    <p>Email: {{ infoPaciente.email }}</p>
-    <p>Telefono: {{ infoPaciente.telefono }}</p>
-    <p>Dni: {{ infoPaciente.dni }}</p>
-    <button class="btn btn-primary">Editar Perfil</button>
+  <div class="container col-lg-12">
+    <div class="row g-3">
+      <h2>Tu Perfil de Paciente</h2>
+      <p class="text-muted">Gestiona tu información personal y médica aquí.</p>
+      <div class="col-lg-6 d-flex flex-wrap gap-3">
+        <div class="form-floating col-md-5">
+          <input id="dniPaciente" [placeholder]="infoPaciente.dni" [value]="infoPaciente.dni" readonly
+            class="form-control">
+          <label for="dniPaciente">DNI</label>
+        </div>
+        <div class="form-floating col-md-5">
+          <input id="nombrePaciente" [placeholder]="infoPaciente.nombre" [value]="infoPaciente.nombre" readonly
+            class="form-control">
+          <label for="nombrePaciente">Nombre</label>
+        </div>
+
+        <div class="form-floating col-md-5">
+          <input id="apellidoPaciente" [placeholder]="infoPaciente.apellido" [value]="infoPaciente.apellido" readonly
+            class="form-control">
+          <label for="apellidoPaciente">Apellido</label>
+        </div>
+
+        <div class="form-floating col-md-5 ">
+          <input id="sexoPaciente" [placeholder]="infoPaciente.sexo" [value]="infoPaciente.sexo" readonly
+            class="form-control">
+          <label for="sexoPaciente">Género</label>
+        </div>
+
+        <div class="form-floating col-md-5 ">
+          <input id="fechaNacimientoPaciente" [placeholder]="infoPaciente.fechaNacimiento"
+            [value]="infoPaciente.fechaNacimiento" readonly class="form-control">
+          <label for="fechaNacimientoPaciente">Fec. Nacimiento</label>
+        </div>
+
+        <div class="form-floating col-md-5 ">
+          <input id="edadPaciente" [placeholder]="infoPaciente.edad" [value]="infoPaciente.edad" readonly
+            class="form-control">
+          <label for="edadPaciente">Edad</label>
+        </div>
+
+        <div class="form-floating col-md-5 ">
+          <input id="emailPaciente" [placeholder]="infoPaciente.email" [value]="infoPaciente.email" readonly
+            class="form-control">
+          <label for="emailPaciente">Email</label>
+        </div>
+
+        <div class="form-floating col-md-5 ">
+          <input id="telefonoPaciente" [placeholder]="infoPaciente.telefono" [value]="infoPaciente.telefono" readonly
+            class="form-control">
+          <label for="telefonoPaciente">Teléfono</label>
+        </div>
+        <div class="form-floating ">
+          <input id="passwordPaciente" value="••••••••••••" readonly
+            class="form-control">
+          <label for="passwordPaciente">Contraseña</label>
+        </div>
+        <div class="d-flex justify-content-start col-md-12">
+          <button class="btn btn-primary me-2">Editar Perfil</button>
+          <button class="btn btn-secondary" (click)="cambiarPassword = true">Cambiar Contraseña</button>
+        </div>
+
+      </div>
+      @if(cambiarPassword) {
+        <div class="col-lg-6 mt-3">
+          <h2>Cambiar Contraseña</h2>
+          <p class="text-muted">Cambia tu contraseña aquí.</p>
+
+          <form [formGroup]="form" >
+            @let newPassword = form.controls.newPassword;
+            @let confirmPassword = form.controls.confirmPassword;
+
+
+            <div class="form-floating">
+              <input id="newPasswordPaciente" class="form-control" type="password" formControlName="newPassword"
+                [class.is-invalid]="newPassword.invalid && newPassword.touched"
+              >
+              <a role="button" class="position-absolute top-50 end-0 translate-middle-y me-4">
+                <i (click)="togglePasswordVisibility()" [ngClass]=" seePassword ?'bi bi-eye' : 'bi-eye-slash'"></i>
+              </a>
+              <label for="newPasswordPaciente">Nueva Contraseña</label>
+              @if (newPassword.touched) {
+                <div class="invalid-feedback">
+                  @if (newPassword.errors?.['required']) { Contraseña es requerida. }
+                  @else if (newPassword.errors?.['minlength']) { La contraseña debe tener mínimo 8 caracteres. }
+                </div>
+              }
+            </div>
+
+            <div class="form-floating mt-3">
+              <input id="confirPasswordPaciente" class="form-control" type="password" formControlName="confirmPassword"
+                [class.is-invalid]="(confirmPassword.invalid && confirmPassword.touched) || (confirmPassword.touched && !confirmarPassword())"
+              >
+              <a role="button" class="position-absolute top-50 end-0 translate-middle-y me-4">
+                <i (click)="toggleConfirmPasswordVisibility()" [ngClass]=" seeConfirmPassword ?'bi bi-eye' : 'bi-eye-slash'"></i>
+              </a>
+              <label for="confirPasswordPaciente">Confirmar Contraseña</label>
+              @if (confirmPassword.touched) {
+                <div class="invalid-feedback">
+                  @if (confirmPassword.errors?.['required']) { Confirmación de contraseña es requerida. }
+                  @else if (!confirmarPassword()) { Las contraseñas no coinciden. }
+                </div>
+              }
+            </div>
+
+            <div class="d-flex justify-content-start mt-3">
+              <button class="btn btn-primary me-2" (click)="actualizarPassword()">Guardar Cambios</button>
+              <button class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      }
+    </div>
   </div>
 </section>
