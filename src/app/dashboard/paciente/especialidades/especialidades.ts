@@ -7,6 +7,7 @@ interface EspecialidadEntity {
   id?: number;
   nombre?: string;
   descripcion?: string;
+  precio?: number;
   message?: string;
   status?: number;
 }
@@ -23,13 +24,15 @@ export class EspecialidadesPaciente implements OnInit {
 
   especialidades: EspecialidadEntity[] = [];
 
+  isLoading = true;
+
   constructor(private especialidadService: EspecialidadService) { }
 
   ngOnInit(): void {
     this.especialidadService.listarEspecialidades().subscribe({
       next: (data) => {
         this.especialidades = data;
-        console.log('Especialidades:', data); // <-- ver en consola
+        this.isLoading = false;
       },
       error: (err) => console.error('Error al obtener especialidades', err)
     });

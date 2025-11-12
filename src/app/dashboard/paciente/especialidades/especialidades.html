@@ -19,29 +19,38 @@
   <div class="container">
 
     <div class="row gy-4 justify-content-center">
+      @if (isLoading){
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      }@else {
+        @for (esp of especialidades; track esp.nombre) {
 
-      @for (esp of especialidades; track esp.nombre) {
+          <div class="col-xl-4 col-lg-6 col-md-8">
+            <div class="doctor-card">
 
-        <div class="col-xl-4 col-lg-6 col-md-8">
-          <div class="doctor-card">
+              <div class="doctor-content mb-2">
+                <h4 class="doctor-name">{{ esp.nombre }}</h4>
 
-            <div class="doctor-content mb-2">
-              <h4 class="doctor-name">{{ esp.nombre }}</h4>
+                <span class="doctor-specialty mb-0">Descricpción</span>
 
-              <span class="doctor-specialty mb-0">Descricpción</span>
+                <div class="doctor-contact-info mt-0">
+                  <p>{{ esp.descripcion }}</p>
+                </div>
 
-              <div class="doctor-contact-info mt-0">
-                <p>{{ esp.descripcion }}</p>
+                <span class="doctor-specialty mb-0">Precio de consulta</span>
+                <div class="doctor-contact-info mt-0">
+                  <p>S/ {{ esp.precio }}</p>
+                </div>
+                <a routerLink="/inicio/paciente/doctores" class="btn-appointment">Ver Doctores</a>
               </div>
-
-              <a routerLink="/inicio/paciente" class="btn-appointment">Ver Doctores</a>
             </div>
           </div>
-        </div>
-      } @empty {
-        <div class="col-12">
-          <p class="text-center">Actualmente no hay especialidades registradas.</p>
-        </div>
+        } @empty {
+          <div class="col-12">
+            <p class="text-center">Actualmente no hay especialidades registradas.</p>
+          </div>
+        }
       }
     </div>
 
