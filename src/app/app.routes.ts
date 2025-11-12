@@ -48,7 +48,7 @@ export const routes: Routes = [
     {path: '', component: InicioPaciente},
     {path: 'mercado-pago', component: MetodoPago},
     {path: 'estado-pago', component: EstadoPago},
-    {path: 'agedar-cita', component: AgendarCita},
+    {path: 'agendar-cita', component: AgendarCita},
     {path: 'mis-citas', component: MisCitas},
     {path: 'doctores', component: Doctores},
     {path: 'especialidades', component: EspecialidadesPaciente},

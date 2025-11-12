@@ -14,7 +14,7 @@
                      placeholder="DNI (Paciente) Correo(Personal)"
                      formControlName="username"
                      [class.is-invalid]="username.invalid && username.touched">
-              <label for="loginUsername">DNI (Paciente) o Correo(Personal)</label>
+              <label for="loginUsername">DNI (Paciente) o Correo(Doctor)</label>
               @if (username.invalid && username.touched) {
                 <div class="invalid-feedback">DNI o Correo es requerido.</div>
               }

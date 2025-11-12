@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import {Router} from '@angular/router';
 import {RegisterService} from '../../../../core/services/auth/register/register';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../../../core/services/auth/login/login';
 
 interface RegisterFormControls {
   nombre: FormControl<string>;
@@ -26,7 +27,7 @@ interface RegisterFormControls {
 })
 export class RegisterComponent {
 
-  constructor(private service: RegisterService, private router: Router) {
+  constructor(private service: RegisterService, private router: Router, private loginService: LoginService) {
   }
 
   registerForm = new FormGroup<RegisterFormControls>({
@@ -111,7 +112,7 @@ export class RegisterComponent {
       });
       return;
     }
-
+    if(!this.loginService.geExp()){localStorage.removeItem('token')}
     this.service.registrar(form).subscribe({
       next: () => {
         Swal.fire({
