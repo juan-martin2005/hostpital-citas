@@ -1,1 +1,119 @@
-<app-error />
+<section class="section">
+  <div class="container p-4">
+    <div class="row mb-4 justify-content-center">
+      <h2 class="mb-4">Bienvenido a tu portal de Doctor</h2>
+      <div class="col-xl-3 col-md-6 mb-3">
+        <div class="card text-white bg-primary h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="card-title mb-0">Citas para Hoy</h5>
+                <h2 class="display-6">{{ totalCitas }}</h2>
+              </div>
+              <i class="fas fa-calendar-day fa-3x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-3">
+        <div class="card text-white bg-success h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="card-title mb-0">Atendidos</h5>
+                <h2 class="display-6">{{ totalAtendidos }}</h2>
+              </div>
+              <i class="fas fa-user-check fa-3x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-3">
+        <div class="card text-white bg-warning h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="card-title mb-0">Pendientes</h5>
+                <h2 class="display-6">{{ totalPendientes }}</h2>
+              </div>
+              <i class="fas fa-user-clock fa-3x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card shadow-sm">
+          <div class="card-header">
+            <h4 class="mb-0">Próximas Citas del Día</h4>
+          </div>
+          <div class="card-body p-0">
+            @if (loading) {
+              <div class="p-4 text-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
+              </div>
+            }
+            @else {
+              <div class="table-responsive">
+                <table class="table table-hover table-borderless align-middle mb-0">
+                  <thead class="bg-primary text-white text-uppercase sticky-top">
+                    <tr>
+                      <th scope="col" class="py-3 text-center">#</th>
+                      <th scope="col" class="py-3 text-center">Hora</th>
+                      <th scope="col" class="py-3 text-center">Paciente</th>
+                      <th scope="col" class="py-3 text-center">DNI</th>
+                      <th scope="col" class="py-3 text-center">Estado</th>
+                      <th scope="col" class="py-3 text-center">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if (citasHoy.length === 0) {
+                      <tr>
+                        <td colspan="6" class="text-center py-5 text-muted fst-italic">
+                          <i class="bi bi-info-circle me-2"></i> No hay citas para hoy.
+                        </td>
+                      </tr>
+                    }
+                    @for (cita of citasHoy; track cita.id) {
+                      <tr class="text-center">
+                        <td class="fw-bold text-primary">{{ $index + 1 }}</td>
+                        <td>{{ cita.horarioDoctor?.horaInicio || cita.horario?.horaInicio }}</td>
+                        <td>{{ cita.nombrePaciente }} {{ cita.apellidoPaciente }}</td>
+                        <td>{{ cita.dniPaciente }}</td>
+                        <td>
+                          <span [ngClass]="{
+                            'badge bg-warning text-dark': cita.estado === 'PENDIENTE',
+                            'badge bg-success': cita.estado === 'FINALIZADO',
+                            'badge bg-secondary': cita.estado === 'CANCELADO'
+                          }" class="badge rounded-pill px-3 py-2 fw-semibold">
+                            {{ cita.estado }}
+                          </span>
+                        </td>
+                        <td>
+                          <div class="d-flex justify-content-center flex-nowrap">
+                            @if (cita.estado === 'PENDIENTE') {
+                              <button class="btn btn-sm btn-outline-primary me-2 shadow-sm" title="Finalizar cita" (click)="finalizarCita(cita)">
+                                <i class="bi bi-check-circle"></i>
+                              </button>
+                            }
+                            @else {
+                              <span class="text-muted">-</span>
+                            }
+                          </div>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,1 +1,112 @@
-<app-error />
+<section class="section">
+  <div class="container-fluid p-4">
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="p-5 bg-light rounded-3 shadow-sm">
+          <h1 class="display-5 fw-bold">¡Bienvenido! <span class="text-primary">{{ paciente.nombrePaciente }} {{ paciente.apellidoPaciente }}</span></h1>
+          <p class="col-md-8 fs-4">Gestiona tu salud de forma fácil y rápida. ¿Qué te gustaría hacer hoy?</p>
+          <a routerLink="/inicio/paciente/agendar-cita" class="btn btn-primary btn-lg me-2">
+            <i class="fas fa-calendar-plus me-2"></i>Agendar Nueva Cita
+          </a>
+          <a routerLink="/inicio/paciente/mis-citas" class="btn btn-outline-secondary btn-lg">
+            <i class="fas fa-list-alt me-2"></i>Ver Mis Citas
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4 border-primary">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-star me-2"></i>Tu Próxima Cita</h4>
+          </div>
+          <div class="card-body">
+            @if (loading) {
+              <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Cargando próxima cita...</span>
+                </div>
+              </div>
+            }
+            @else if (!proximaCita) {
+              <div class="text-center text-muted py-4 fst-italic">
+                <i class="bi bi-info-circle me-2"></i> No tienes próximas citas agendadas.
+              </div>
+            }
+            @else {
+              <h5 class="card-title">{{ proximaCita.nombreDoctor }} ({{ proximaCita.especialidadDoctor }})</h5>
+              <p class="card-text fs-5">
+                <strong><i class="fas fa-calendar-alt me-2"></i>Fecha:</strong>
+                {{ getFechaEs(proximaCita.fecha ) }}
+                <br>
+                <strong><i class="fas fa-clock me-2"></i>Hora:</strong>
+                {{ proximaCita.horaInicio}}
+                <br>
+                <!-- Lugar podría venir de la cita si existe -->
+              </p>
+              <button class="btn btn-outline-danger" (click)="cancelarCita(proximaCita)">Cancelar Cita</button>
+            }
+          </div>
+        </div>
+        <div class="card shadow-sm">
+          <div class="card-header">
+            <h5 class="mb-0">Citas Recientes</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover table-borderless align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col" class="py-3 text-center">Fecha</th>
+                    <th scope="col" class="py-3 text-center">Doctor</th>
+                    <th scope="col" class="py-3 text-center">Especialidad</th>
+                    <th scope="col" class="py-3 text-center">Estado</th>
+                    <th scope="col" class="py-3 text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (loading) {
+                    <tr>
+                      <td colspan="5" class="text-center py-5 text-muted">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Cargando citas...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                  @else if (citasRecientes.length === 0) {
+                    <tr>
+                      <td colspan="5" class="text-center py-5 text-muted fst-italic">
+                        <i class="bi bi-info-circle me-2"></i> No hay citas recientes.
+                      </td>
+                    </tr>
+                  }
+                  @else {
+                    @for (cita of citasRecientes; track cita.id) {
+                      <tr class="text-center">
+                        <td>{{ getFechaEs(cita.fecha) }}</td>
+                        <td>{{ cita.nombreDoctor }}</td>
+                        <td>{{ cita.especialidadDoctor }}</td>
+                        <td>
+                          <span [ngClass]="{
+                            'badge bg-success': cita.estado === 'FINALIZADO',
+                            'badge bg-secondary': cita.estado === 'CANCELADO'
+                          }" class="badge rounded-pill px-3 py-2 fw-semibold">
+                            {{ cita.estado }}
+                          </span>
+                        </td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm">Ver Resumen</button>
+                        </td>
+                      </tr>
+                    }
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
