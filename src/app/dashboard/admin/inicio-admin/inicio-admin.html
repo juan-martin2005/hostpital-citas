@@ -1,1 +1,104 @@
-<app-error />
+<section class="section">
+	<div class="container-fluid p-4">
+		<h2 class="mb-4 fw-bold">Panel de Administración</h2>
+		<div class="row mb-4">
+			<div class="col-md-3 mb-3">
+				<div class="card card-summary bg-primary text-white shadow">
+					<div class="card-body text-center">
+						<div>Total Pacientes</div>
+						<div class="display-6">{{ totales.pacientes || 0 }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 mb-3">
+				<div class="card card-summary bg-success text-white shadow">
+					<div class="card-body text-center">
+						<div class="">Total Doctores</div>
+						<div class="display-6">{{ totales.doctores || 0 }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 mb-3">
+				<div class="card card-summary bg-warning text-dark shadow">
+					<div class="card-body text-center">
+						<div>Total Citas</div>
+						<div class="display-6">{{ totales.citas || 0 }}</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 mb-3">
+				<div class="card card-summary bg-info text-white shadow">
+					<div class="card-body text-center">
+						<div>Total Especialidades</div>
+						<div class="display-6">{{ totales.especialidades || 0 }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-4">
+			<div class="col-lg-6 mb-4">
+				<div class="card shadow mb-4">
+					<div class="card-header bg-light fw-bold">Últimos Pacientes Registrados</div>
+					<div class="card-body p-0">
+						<div class="table-responsive">
+							<table class="table table-hover mb-0">
+								<thead class="table-light">
+									<tr>
+										<th>Nombre</th>
+										<th>Apellido</th>
+										<th>DNI</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+									@for (paciente of ultimosPacientes; track $index) {
+                    <tr>
+                      <td>{{ paciente.nombre }}</td>
+                      <td>{{ paciente.apellido }}</td>
+                      <td>{{ paciente.dni }}</td>
+                      <td>{{ paciente.email }}</td>
+									  </tr>
+                  }
+                  @if(ultimosPacientes.length === 0){
+                    <tr>
+                      <td colspan="4" class="text-center text-muted">No hay datos.</td>
+                    </tr>
+                  }
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+        <div class="card shadow">
+          <div class="card-header bg-light fw-bold">Citas por Especialidad</div>
+          <div class="card-body">
+            @if(chartEspecialidad){
+              <c-chart
+              [type]="chartEspecialidad.type"
+              [data]="chartEspecialidad.data"
+              [options]="chartEspecialidad.options"
+              >
+            </c-chart>
+            }
+          </div>
+        </div>
+			</div>
+			<div class="col-lg-6 mb-4">
+				<div class="card shadow mb-4">
+					<div class="card-header bg-light fw-bold">Citas por Estado</div>
+					<div class="card-body">
+						@if(chartEstado){
+              <c-chart
+							[type]="chartEstado.type"
+							[data]="chartEstado.data"
+							[options]="chartEstado.options"
+							style="min-height:300px">
+						</c-chart>
+            }
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
