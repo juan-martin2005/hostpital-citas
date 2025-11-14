@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface CitaMedicaEntity {
   idDoctor?: number;
@@ -12,12 +13,26 @@ interface CitaMedicaEntity {
   dniPaciente?: string;
   nombrePaciente?: string;
   apellidoPaciente?: string;
-  horarioDoctor?: HorarioEntity;
-  horario?: HorarioEntity;
+  fecha?: string;
+  horaInicio?: string;
+  horaFin?: string;
   estado?: string;
 
   message?: string;
   status?: number;
+}
+
+interface PacienteEntity {
+  id?: number;
+  dniPaciente?: string;
+  nombrePaciente?: string;
+  apellidoPaciente?: string;
+  telefonoPaciente?: string;
+  emailPaciente?: string;
+  sexoPaciente?: string;
+  edadPaciente?: number;
+  horario?: HorarioEntity;
+  estado?: string;
 }
 
 interface HorarioEntity {
@@ -32,12 +47,13 @@ interface HorarioEntity {
 })
 
 export class CitaMedicaService {
+  // private url = `${environment.apiURL}/cita-medica`;
   private url = 'http://localhost:8080/api/cita-medica';
 
   constructor(private http: HttpClient) { }
 
-  listarCitasPaciente(): Observable<CitaMedicaEntity[]> {
-    return this.http.get<CitaMedicaEntity[]>(`${this.url}/pacientes`);
+  listarCitasPaciente(): Observable<PacienteEntity[]> {
+    return this.http.get<PacienteEntity[]>(`${this.url}/pacientes`);
   }
 
   listarMisCitas(): Observable<CitaMedicaEntity[]> {

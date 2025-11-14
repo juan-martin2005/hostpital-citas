@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface UsuarioEntity {
   id?: number;
@@ -18,7 +19,9 @@ interface UsuarioEntity {
   providedIn: 'root'
 })
 export class UsuarioService {
+  // private url = `${environment.apiURL}/usuario`;
   private url = 'http://localhost:8080/api/usuario';
+
 
   constructor(private http: HttpClient) { }
 

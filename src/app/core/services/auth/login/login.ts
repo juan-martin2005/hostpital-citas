@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable, tap} from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 interface LoginEnity {
   username: string;
@@ -67,7 +68,6 @@ export class LoginService {
       username: payload.username || payload.sub,
       nombre: payload.nombre,
       apellido: payload.apellido,
-      email: payload.email,
       rol: payload.role[0].authority
     };
   }

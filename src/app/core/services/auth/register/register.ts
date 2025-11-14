@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 interface RegistroEntity {
   dni: string;
@@ -17,6 +18,7 @@ interface RegistroEntity {
   providedIn: 'root'
 })
 export class RegisterService {
+  // private url = `${environment.apiURL}/paciente`
   private url = 'http://localhost:8080/api/paciente'
   constructor(private http: HttpClient) { }
 

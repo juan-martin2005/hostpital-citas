@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface PacienteEntity {
   id?: number;
@@ -22,7 +23,9 @@ interface PacienteEntity {
 })
 
 export class PacienteService {
+  // private url = `${environment.apiURL}/paciente`;
   private url = 'http://localhost:8080/api/paciente';
+
 
   constructor(private http: HttpClient) {
   }
@@ -31,15 +34,18 @@ export class PacienteService {
     return this.http.get<PacienteEntity[]>(this.url);
   }
 
-  obtenerPacientePorId(id: number): Observable<PacienteEntity> {
-    return this.http.get<PacienteEntity>(`${this.url}/${id}`);
+  obtenerPerfilPaciente(): Observable<PacienteEntity> {
+    return this.http.get<PacienteEntity>(`${this.url}/perfil`);
   }
 
   crearPaciente(paciente: PacienteEntity): Observable<PacienteEntity> {
     return this.http.post<PacienteEntity>(this.url, paciente);
   }
 
-  actualizarPaciente(id: number, paciente: PacienteEntity): Observable<PacienteEntity> {
-    return this.http.put<PacienteEntity>(`${this.url}/${id}`, paciente);
+  actualizarPaciente(paciente: PacienteEntity): Observable<PacienteEntity> {
+    return this.http.put<PacienteEntity>(`${this.url}/update-perfil`, paciente);
+  }
+  actualizarPassword(paciente: PacienteEntity): Observable<PacienteEntity> {
+    return this.http.patch<PacienteEntity>(`${this.url}/update-password`, paciente);
   }
 }

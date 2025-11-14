@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 interface EspecialidadEntity {
   id?: number;
   nombre?: string;
   descripcion?: string;
+  precio?: number;
   message?: string;
   status?: number;
 }
@@ -15,6 +17,7 @@ interface EspecialidadEntity {
 })
 
 export class EspecialidadService {
+  // private url = `${environment.apiURL}/especialidad`;
   private url = 'http://localhost:8080/api/especialidad';
 
   constructor(private http: HttpClient) { }
